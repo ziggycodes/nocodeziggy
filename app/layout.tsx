@@ -3,9 +3,7 @@ import { inter, jetbrains } from "@/lib/fonts";
 import { profile } from "@/content/profile";
 import { SmoothScroll } from "@/components/providers/SmoothScroll";
 import { Nav } from "@/components/chrome/Nav";
-import { Cursor } from "@/components/chrome/Cursor";
 import { ScrollProgress } from "@/components/chrome/ScrollProgress";
-import { BootSequence } from "@/components/chrome/BootSequence";
 import { Footer } from "@/components/chrome/Footer";
 import "./globals.css";
 
@@ -58,9 +56,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${jetbrains.variable}`}>
       <body className="bg-[var(--color-void)] text-[var(--color-hi)] antialiased">
-        <BootSequence />
         <SmoothScroll>
-          <Cursor />
           <ScrollProgress />
           <Nav />
           <main id="content">{children}</main>

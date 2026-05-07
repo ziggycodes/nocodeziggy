@@ -106,14 +106,6 @@
     height: 0;
   }
 
-  /* Native cursor hidden on desktop where we render the custom reticle */
-  @media (hover: hover) and (pointer: fine) {
-    html.has-custom-cursor,
-    html.has-custom-cursor * {
-      cursor: none !important;
-    }
-  }
-
   a,
   button {
     color: inherit;

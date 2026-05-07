@@ -1,8 +1,8 @@
-# NoCodeZiggy — Operator Lab
+# NoCodeZiggy
 
-A cinematic, dark, mission-control website for **NoCodeZiggy** — an AI automation, n8n / Make / Bubble.io creator brand.
+A cinematic, dark personal site for **NoCodeZiggy** — an AI automation, n8n / Make / Bubble.io creator brand.
 
-The visual concept is **"The Operator's Lab"**: visitors don't browse a portfolio, they boot into a working lab where systems run live. Every section is a HUD-styled module — corner brackets, monospace data labels, hairline grids, controlled cyan glow. The design system is sampled directly from the lockup logo (`public/brand/logo-{dark,light}.svg`).
+The visual concept is intentionally restrained: a dark canvas, a single cyan accent, and animated workflow diagrams that show expertise without leaning on technical jargon. The design system is sampled directly from the lockup logo (`public/brand/logo-{dark,light}.svg`).
 
 ---
 
@@ -37,25 +37,24 @@ npm run typecheck # tsc --noEmit
 ```
 nocodeziggy/
 ├─ app/
-│  ├─ layout.tsx               # fonts, providers, nav, cursor, footer
-│  ├─ page.tsx                 # composes the 7 sections
+│  ├─ layout.tsx               # fonts, providers, nav, footer
+│  ├─ page.tsx                 # composes the 6 sections
 │  ├─ globals.css              # tokens (@theme), base, utility classes, keyframes
 │  ├─ icon.tsx                 # 32×32 favicon — generated from the logo mark
 │  ├─ apple-icon.tsx           # 180×180 — generated from the lockup
 │  ├─ opengraph-image.tsx      # 1200×630 OG card — generated from the lockup
-│  └─ api/contact/route.ts     # transmission handler (logs; ready for email/Slack)
+│  └─ api/contact/route.ts     # contact-form handler (logs; ready for email/Slack)
 ├─ components/
-│  ├─ sections/                # Hero, SystemsLab, HowIBuild, Content, Services, Experimental, Contact
+│  ├─ sections/                # Hero, SystemsLab (Work), HowIBuild (Process), Content (Watch), Experimental (In the lab), Contact
 │  ├─ three/                   # HeroLabScene, AgentMeshScene (lazy + SSR off)
-│  ├─ ui/                      # HUD primitives (HudPanel, StatusPill, CtaButton, TerminalLine, MetricCounter, Reticle, NodeFlowSVG, SectionHeader)
-│  ├─ chrome/                  # Logo, Nav, Cursor, ScrollProgress, BootSequence, Footer
+│  ├─ ui/                      # Reusable primitives (HudPanel, CtaButton, MetricCounter, NodeFlowSVG, SectionHeader, …)
+│  ├─ chrome/                  # Logo, Nav, ScrollProgress, Footer
 │  └─ providers/               # SmoothScroll (Lenis wrapper)
 ├─ content/                    # ⭐ Single-source-of-truth content
-│  ├─ profile.ts               # bio, socials, hero copy, ticker
-│  ├─ systems.ts               # 8 placeholder systems (with workflow diagrams)
-│  ├─ services.ts              # 6 deployable stacks
+│  ├─ profile.ts               # bio, socials, hero copy
+│  ├─ systems.ts               # placeholder work entries (with workflow diagrams)
 │  ├─ media.ts                 # YouTube content cards
-│  └─ experiments.ts           # Currently-building lab projects
+│  └─ experiments.ts           # In-the-lab projects
 ├─ lib/
 │  ├─ fonts.ts                 # next/font setup
 │  ├─ motion.ts                # shared easings + variants
@@ -67,23 +66,35 @@ nocodeziggy/
 
 ---
 
+## Sections
+
+| Section            | Anchor          | Purpose                                                  |
+| ------------------ | --------------- | -------------------------------------------------------- |
+| Hero               | `#hero`         | One-glance positioning + cinematic 3D backdrop           |
+| Work               | `#lab`          | Case studies with animated workflow diagrams             |
+| Process            | `#build`        | Four-stage pipeline, pinned horizontal scroll            |
+| Watch              | `#media`        | Featured video + filterable content grid                 |
+| Currently Building | `#experimental` | Half-formed prototypes, progress bars                    |
+| Contact            | `#contact`      | Clean form + direct channel links                        |
+
+---
+
 ## Customizing Content
 
 All copy and data lives in `content/*.ts`. Edit one file and the site updates everywhere.
 
 | What to change                   | Where                                                    |
 | -------------------------------- | -------------------------------------------------------- |
-| Bio, hero copy, socials, ticker  | `content/profile.ts`                                     |
-| Project / system modules         | `content/systems.ts` (incl. `nodes` + `edges` for diagrams) |
-| Services (the 6 stacks)          | `content/services.ts`                                    |
+| Bio, hero copy, socials          | `content/profile.ts`                                     |
+| Work / case study modules        | `content/systems.ts` (incl. `nodes` + `edges` for diagrams) |
 | YouTube / content cards          | `content/media.ts`                                       |
 | Lab experiments / WIP            | `content/experiments.ts`                                 |
 | Logo SVGs                        | `public/brand/logo-{dark,light}.svg`                     |
 | Generated favicon / OG image     | `app/{icon,apple-icon,opengraph-image}.tsx`              |
 
-> Adding a new system module? Just append an item to `systems.ts`. Provide `nodes` (each with `x` and `y` on a 0–100 grid) and `edges` — the `NodeFlowSVG` component will animate the diagram automatically.
+> Adding a new work entry? Just append an item to `systems.ts`. Provide `nodes` (each with `x` and `y` on a 0–100 grid) and `edges` — the `NodeFlowSVG` component will animate the diagram automatically.
 
-> Setting `hasMesh: true` on a system swaps the static SVG diagram for the live 3D `AgentMeshScene` in the Mission Detail overlay.
+> Setting `hasMesh: true` on an entry swaps the static SVG diagram for the live 3D `AgentMeshScene` in the case-study overlay.
 
 ---
 
@@ -108,7 +119,7 @@ Everything else is black, white, or grey. Cyan is rare — when you see it, some
 ### Typography
 
 - **Inter** (400 / 500 / 700) — display + body. Matches the wordmark for cohesion.
-- **JetBrains Mono** (400 / 500) — HUD labels, terminal lines, metrics, system IDs.
+- **JetBrains Mono** (400 / 500) — small data labels, metric counters.
 
 ### Motifs
 
@@ -124,7 +135,6 @@ Everything else is black, white, or grey. Cyan is rare — when you see it, some
 - `dpr` clamped at 1.5 (desktop) / 1.2 (mobile).
 - Mobile detection in the Hero swaps to a low-poly profile.
 - `prefers-reduced-motion` is honored across:
-  - Boot sequence — skipped entirely
   - Hero R3F scene — replaced by a static dark canvas
   - Cycling headline — no auto-cycle
   - GSAP pinned scroll — falls back to vertical stack
@@ -134,9 +144,9 @@ Everything else is black, white, or grey. Cyan is rare — when you see it, some
 
 ## Accessibility
 
-- Custom cursor disabled on touch / non-`hover:hover` devices (native cursor remains).
-- Focus rings: cyan hairline + 2px offset on every interactive element.
-- ESC closes the Mission Detail overlay.
+- Native cursor preserved across all surfaces.
+- Focus rings: cyan border + transition on every interactive element.
+- ESC closes the case-study overlay.
 - Section landmarks: `<section id="...">` for nav anchors and ScrollProgress markers.
 - Color contrast checked against WCAG AA on text-on-background pairs.
 
@@ -148,17 +158,16 @@ Everything else is black, white, or grey. Cyan is rare — when you see it, some
 // Request
 {
   "name": "string",          // required
-  "handle": "string | null",
-  "stack": "string | null",  // e.g. "stk-01"
+  "handle": "string | null", // email
+  "stack": "string | null",  // optional interest tag (e.g. "ai-agents")
   "message": "string"        // required, max 4000 chars
 }
 
 // Response (200)
 {
   "ok": true,
-  "id": "TXM-XXXXXX",
   "receivedAt": "2026-05-07T00:00:00.000Z",
-  "message": "TRANSMISSION RECEIVED // RESPONDING WITHIN 24H"
+  "message": "Message received — responding within 24h."
 }
 ```
 
@@ -168,9 +177,8 @@ Currently the handler logs to stdout. To wire real delivery, replace the `consol
 
 ## Notes for Future You
 
-- Adding a new section: drop it in `components/sections/`, give the root element an `id`, and register the id in `components/chrome/Nav.tsx` and `components/chrome/ScrollProgress.tsx` so the section dot tracker picks it up.
+- Adding a new section: drop it in `components/sections/`, give the root element an `id`, and register the id in `components/chrome/Nav.tsx` and `components/chrome/ScrollProgress.tsx`.
 - The cycling Hero headline reads from `profile.hero.headlines` — add or remove lines freely.
-- The boot sequence runs once per session via `sessionStorage('nocz-booted')`. Clear it during dev: `sessionStorage.removeItem("nocz-booted")`.
 
 ---
 

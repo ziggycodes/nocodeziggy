@@ -6,11 +6,10 @@ import { Logo } from "./Logo";
 import { cn } from "@/lib/cn";
 
 const NAV_ITEMS = [
-  { id: "lab", label: "Lab" },
+  { id: "lab", label: "Work" },
   { id: "build", label: "Process" },
-  { id: "media", label: "Media" },
-  { id: "stacks", label: "Stacks" },
-  { id: "experimental", label: "Experimental" },
+  { id: "media", label: "Watch" },
+  { id: "experimental", label: "Lab" },
 ];
 
 export function Nav() {
@@ -121,11 +120,10 @@ export function Nav() {
         <a
           href="#contact"
           onClick={onJump("contact")}
-          className="group relative inline-flex items-center gap-2 rounded-full bg-[var(--color-cyan)] px-4 py-1.5 text-[12px] font-medium uppercase tracking-[0.18em] text-[var(--color-void)] transition-[transform,filter] hover:brightness-110 active:scale-[0.98]"
+          className="group relative inline-flex items-center gap-2 rounded-full bg-[var(--color-cyan)] px-4 py-1.5 text-[12px] font-medium tracking-[0.04em] text-[var(--color-void)] transition-[transform,filter] hover:brightness-110 active:scale-[0.98]"
           style={{ boxShadow: "0 0 24px var(--color-cyan-glow)" }}
         >
-          <span aria-hidden className="h-1 w-1 rounded-full bg-[var(--color-void)]" />
-          Initiate
+          Contact
         </a>
       </nav>
     </header>

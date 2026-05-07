@@ -4,26 +4,20 @@ import { motion } from "motion/react";
 import { cn } from "@/lib/cn";
 
 type Props = {
-  /** Index code, e.g. SEC-02 */
-  code: string;
-  /** Short HUD label, e.g. SYSTEMS LAB */
+  /** Soft, lowercase or sentence-case eyebrow above the title (e.g. "Work"). */
   eyebrow: string;
   /** Section title — large display text. */
   title: React.ReactNode;
   /** Optional one-liner under the title. */
   description?: React.ReactNode;
-  /** Right-side meta block (badges, status, etc.) */
-  meta?: React.ReactNode;
   align?: "left" | "center";
   className?: string;
 };
 
 export function SectionHeader({
-  code,
   eyebrow,
   title,
   description,
-  meta,
   align = "left",
   className,
 }: Props) {
@@ -41,19 +35,16 @@ export function SectionHeader({
     >
       <div
         className={cn(
-          "flex w-full items-center justify-between gap-4 text-hud-label",
+          "flex items-center gap-3 text-[12px] tracking-[0.04em] text-[var(--color-mid)]",
           align === "center" && "justify-center"
         )}
       >
-        <div className="flex items-center gap-3">
-          <span aria-hidden className="h-1 w-1 rounded-full bg-[var(--color-cyan)]" />
-          <span>{code}</span>
-          <span aria-hidden className="text-[var(--color-grid)]">/</span>
-          <span className="text-[var(--color-mid)]">{eyebrow}</span>
-        </div>
-        {meta && (
-          <div className="hidden items-center gap-2 md:flex">{meta}</div>
-        )}
+        <span
+          aria-hidden
+          className="h-px w-8 bg-[var(--color-cyan)]"
+          style={{ boxShadow: "0 0 6px var(--color-cyan-glow)" }}
+        />
+        <span>{eyebrow}</span>
       </div>
 
       <div

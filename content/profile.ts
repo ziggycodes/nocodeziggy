@@ -17,15 +17,6 @@ export const profile = {
       "Workflows that run on autopilot.",
     ],
     sub: "I design and deploy AI agents, n8n + Make automations, and Bubble SaaS systems for operators who want leverage.",
-    statusLine: "SYS: OPERATIONAL // AGENTS: 12 // STACKS: 6",
-    ticker: [
-      "deployed: lead-gen agent v2.4",
-      "live: meal-planner saas",
-      "alpha: voice receptionist",
-      "shipped: crm-sync orchestrator",
-      "experimenting: ai marketplace mvp",
-      "monitoring: 2.1M API calls / month",
-    ],
   },
   bio: {
     short:

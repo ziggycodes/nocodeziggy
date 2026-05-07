@@ -3,7 +3,6 @@
 import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { SectionHeader } from "@/components/ui/SectionHeader";
-import { StatusPill } from "@/components/ui/StatusPill";
 import { HudPanel } from "@/components/ui/HudPanel";
 import { media, mediaCategories, type MediaCategory } from "@/content/media";
 import { cn } from "@/lib/cn";
@@ -28,34 +27,28 @@ export function Content() {
 
       <div className="relative mx-auto w-full max-w-[1400px] px-6 md:px-10">
         <SectionHeader
-          code="SEC-03"
-          eyebrow="MEDIA COMMAND"
+          eyebrow="Watch"
           title={
             <>
               Build logs, teardowns,{" "}
               <span className="text-[var(--color-mid)]">and unedited live builds.</span>
             </>
           }
-          description="The same lab, on tape. New drops weekly. Workflows in the description."
-          meta={<StatusPill tone="cyan">LIVE FEED</StatusPill>}
+          description="The same lab, on tape. New drops weekly."
         />
 
-        {/* Featured */}
         <FeaturedDeck item={featured} />
 
         {/* Filters */}
         <div className="mt-10 flex flex-wrap items-center gap-2">
           <FilterPill value="ALL" current={filter} onClick={setFilter}>
-            ALL
+            All
           </FilterPill>
           {mediaCategories.map((c) => (
             <FilterPill key={c} value={c} current={filter} onClick={setFilter}>
-              {c}
+              {prettyCategory(c)}
             </FilterPill>
           ))}
-          <span className="ml-auto text-hud-label">
-            {grid.length} / {media.length} ITEMS
-          </span>
         </div>
 
         {/* Grid */}
@@ -74,6 +67,15 @@ export function Content() {
   );
 }
 
+function prettyCategory(c: MediaCategory) {
+  // Title-case version of the category labels
+  return c
+    .toLowerCase()
+    .split(" ")
+    .map((w) => w[0].toUpperCase() + w.slice(1))
+    .join(" ");
+}
+
 function FilterPill({
   value,
   current,
@@ -90,20 +92,12 @@ function FilterPill({
     <button
       onClick={() => onClick(value)}
       className={cn(
-        "relative inline-flex items-center gap-2 border px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.18em] transition-colors",
+        "relative inline-flex items-center gap-2 border px-3 py-1.5 text-[12px] tracking-[0.02em] transition-colors",
         active
           ? "border-[var(--color-cyan)] text-[var(--color-cyan)] bg-[color:rgb(34_211_238/0.08)]"
           : "border-[var(--color-grid)] text-[var(--color-mid)] hover:border-[var(--color-hi)] hover:text-[var(--color-hi)]"
       )}
-      style={active ? { boxShadow: "0 0 14px var(--color-cyan-glow)" } : undefined}
     >
-      <span
-        aria-hidden
-        className={cn(
-          "h-1 w-1 rounded-full",
-          active ? "bg-[var(--color-cyan)]" : "bg-[var(--color-dim)]"
-        )}
-      />
       {children}
     </button>
   );
@@ -121,19 +115,7 @@ function FeaturedDeck({ item }: { item: (typeof media)[number] }) {
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       className="mt-12 block group"
     >
-      <HudPanel
-        live
-        code="FEATURED // VTR-01"
-        tag={
-          <div className="flex items-center gap-3">
-            <StatusPill tone="cyan">NOW PLAYING</StatusPill>
-            <span className="font-mono text-[10px] tracking-[0.2em] text-[var(--color-mid)]">
-              {item.duration}
-            </span>
-          </div>
-        }
-        bodyClassName="p-0"
-      >
+      <HudPanel bodyClassName="p-0">
         <div className="relative aspect-[21/9] w-full overflow-hidden bg-[var(--color-void)]">
           {/* Faux thumbnail: layered grids + cyan accents */}
           <div className="absolute inset-0 grid-floor opacity-[0.6]" />
@@ -165,30 +147,24 @@ function FeaturedDeck({ item }: { item: (typeof media)[number] }) {
             </div>
           </div>
 
-          {/* HUD overlays */}
-          <div className="absolute left-4 top-4 flex items-center gap-2 font-mono text-[10px] tracking-[0.2em] text-[var(--color-mid)]">
-            <span className="text-[var(--color-cyan)]">REC ●</span>
-            VTR // {item.date}
-          </div>
-          <div className="absolute right-4 top-4 font-mono text-[10px] tracking-[0.2em] text-[var(--color-mid)]">
-            {item.category}
-          </div>
           <div className="absolute bottom-0 left-0 right-0 flex items-end justify-between gap-6 bg-gradient-to-t from-[rgb(0_0_0/0.85)] to-transparent p-6">
             <div>
-              <div className="text-hud-label mb-1 text-[var(--color-cyan)]">
-                FEATURED BUILD
+              <div className="mb-2 text-[12px] tracking-[0.04em] text-[var(--color-cyan)]">
+                Featured
               </div>
               <h3 className="max-w-[42ch] text-[clamp(1.4rem,3vw,2.4rem)] font-bold leading-[1.05] tracking-tight">
                 {item.title}
               </h3>
             </div>
             <div className="hidden text-right md:block">
-              <div className="text-hud-label">DURATION</div>
+              <div className="text-[12px] tracking-[0.04em] text-[var(--color-mid)]">
+                Duration
+              </div>
               <div className="font-mono text-[18px] text-[var(--color-hi)]">{item.duration}</div>
             </div>
           </div>
 
-          {/* Animated scanline on hover */}
+          {/* Subtle scanline shimmer on hover */}
           <span
             aria-hidden
             className="pointer-events-none absolute inset-x-0 top-0 h-24 -translate-y-full bg-gradient-to-b from-transparent via-[color:rgb(34_211_238/0.10)] to-transparent transition-transform duration-700 group-hover:translate-y-[400%]"
@@ -200,16 +176,6 @@ function FeaturedDeck({ item }: { item: (typeof media)[number] }) {
 }
 
 function MediaCard({ item, index }: { item: (typeof media)[number]; index: number }) {
-  const cat = item.category;
-  const tone =
-    cat === "BUILD LOG"
-      ? "cyan"
-      : cat === "EXPERIMENT"
-      ? "violet"
-      : cat === "TEARDOWN"
-      ? "amber"
-      : "neutral";
-
   return (
     <motion.a
       layout
@@ -223,9 +189,8 @@ function MediaCard({ item, index }: { item: (typeof media)[number]; index: numbe
       whileHover={{ y: -2 }}
       className="group relative block"
     >
-      <HudPanel compact bodyClassName="p-0" className="hover:border-[color:rgb(34_211_238/0.4)] transition-colors">
+      <HudPanel bodyClassName="p-0" className="hover:border-[color:rgb(34_211_238/0.4)] transition-colors">
         <div className="relative aspect-video w-full overflow-hidden bg-[var(--color-void)]">
-          {/* Faux frame */}
           <div className="absolute inset-0 grid-floor opacity-[0.6]" />
           <div
             aria-hidden
@@ -244,12 +209,7 @@ function MediaCard({ item, index }: { item: (typeof media)[number]; index: numbe
             </div>
           </div>
 
-          <div className="absolute left-2 top-2">
-            <StatusPill tone={tone as any} pulse={false}>
-              {cat}
-            </StatusPill>
-          </div>
-          <div className="absolute right-2 bottom-2 font-mono text-[10px] tracking-[0.18em] text-[var(--color-mid)] bg-[color:rgb(0_0_0/0.6)] px-1.5 py-0.5">
+          <div className="absolute right-2 bottom-2 font-mono text-[11px] text-[var(--color-mid)] bg-[color:rgb(0_0_0/0.6)] px-1.5 py-0.5">
             {item.duration}
           </div>
 
@@ -260,7 +220,11 @@ function MediaCard({ item, index }: { item: (typeof media)[number]; index: numbe
         </div>
 
         <div className="p-4">
-          <div className="text-hud-label mb-2 text-[var(--color-mid)]">{item.date}</div>
+          <div className="mb-2 flex items-center gap-2 text-[12px] tracking-[0.02em] text-[var(--color-mid)]">
+            <span className="text-[var(--color-cyan)]">{prettyCategory(item.category)}</span>
+            <span aria-hidden>·</span>
+            <span>{item.date}</span>
+          </div>
           <h4 className="text-[14px] font-medium leading-snug text-[var(--color-hi)] group-hover:text-[var(--color-cyan)] transition-colors">
             {item.title}
           </h4>
@@ -272,5 +236,3 @@ function MediaCard({ item, index }: { item: (typeof media)[number]; index: numbe
     </motion.a>
   );
 }
-
-void cn;

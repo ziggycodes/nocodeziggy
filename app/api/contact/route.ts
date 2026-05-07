@@ -19,8 +19,8 @@ export async function POST(req: Request) {
       );
     }
 
-    // For now we just log. Plug an email/Slack/notion service in here.
-    console.log("[NOCZ-COMMS] transmission received", {
+    // For now we just log. Plug an email/Slack service in here.
+    console.log("[contact] message received", {
       at: new Date().toISOString(),
       name,
       handle,
@@ -28,15 +28,13 @@ export async function POST(req: Request) {
       length: message.length,
     });
 
-    // Simulate the bridge taking a moment to compile / dispatch.
     await new Promise((r) => setTimeout(r, 220));
 
     return NextResponse.json(
       {
         ok: true,
-        id: `TXM-${Math.random().toString(36).slice(2, 8).toUpperCase()}`,
         receivedAt: new Date().toISOString(),
-        message: "TRANSMISSION RECEIVED // RESPONDING WITHIN 24H",
+        message: "Message received — responding within 24h.",
       },
       { status: 200 }
     );

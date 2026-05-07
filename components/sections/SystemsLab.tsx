@@ -5,12 +5,10 @@ import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
 import { systems, type System } from "@/content/systems";
 import { HudPanel } from "@/components/ui/HudPanel";
-import { StatusPill } from "@/components/ui/StatusPill";
 import { NodeFlowSVG } from "@/components/ui/NodeFlowSVG";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { CtaButton } from "@/components/ui/CtaButton";
 import { MetricCounter } from "@/components/ui/MetricCounter";
-import { cn } from "@/lib/cn";
 
 const AgentMeshScene = dynamic(
   () =>
@@ -35,32 +33,19 @@ export function SystemsLab() {
   }, [active]);
 
   return (
-    <section
-      id="lab"
-      className="relative py-24 md:py-36"
-    >
-      {/* faint grid behind content */}
+    <section id="lab" className="relative py-24 md:py-36">
       <div aria-hidden className="pointer-events-none absolute inset-0 grid-floor opacity-[0.5]" />
 
       <div className="relative mx-auto w-full max-w-[1400px] px-6 md:px-10">
         <SectionHeader
-          code="SEC-01"
-          eyebrow="SYSTEMS LAB"
+          eyebrow="Work"
           title={
             <>
               Live systems.{" "}
-              <span className="text-[var(--color-mid)]">
-                Running. Observable. Yours, when needed.
-              </span>
+              <span className="text-[var(--color-mid)]">Built, deployed, running.</span>
             </>
           }
-          description="Each module below is a real production-grade system I've built and shipped. Tap to open mission detail."
-          meta={
-            <>
-              <StatusPill tone="cyan">{systems.length} ACTIVE</StatusPill>
-              <span className="text-hud-label">CLICK TO OPEN MISSION</span>
-            </>
-          }
+          description="A selection of production systems I've designed and shipped. Tap any to open the case study."
         />
 
         <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
@@ -93,13 +78,6 @@ function SystemCard({
   index: number;
   onOpen: () => void;
 }) {
-  const tone =
-    system.status === "DEPLOYED"
-      ? "cyan"
-      : system.status === "ALPHA"
-      ? "amber"
-      : "violet";
-
   return (
     <motion.button
       layoutId={`module-${system.id}`}
@@ -113,20 +91,15 @@ function SystemCard({
       className="group relative block w-full text-left"
     >
       <HudPanel
-        live={system.status === "DEPLOYED"}
-        code={system.code}
-        tag={
-          <>
-            <StatusPill tone={tone as any}>{system.status}</StatusPill>
-          </>
-        }
         className="hover:border-[color:rgb(34_211_238/0.4)] transition-colors"
         bodyClassName="flex flex-col gap-4"
       >
         {/* Title row */}
         <div className="flex items-start justify-between gap-3">
           <div>
-            <div className="text-hud-label mb-1">{system.category}</div>
+            <div className="mb-1 text-[12px] tracking-[0.04em] text-[var(--color-mid)]">
+              {system.category}
+            </div>
             <h3 className="text-[20px] font-medium leading-tight">
               {system.title}
             </h3>
@@ -141,7 +114,6 @@ function SystemCard({
 
         {/* Mini diagram */}
         <div className="relative aspect-[16/8] w-full overflow-hidden border border-[var(--color-grid)] bg-[var(--color-void)]">
-          {/* scanline shimmer */}
           <span
             aria-hidden
             className="pointer-events-none absolute inset-x-0 top-0 h-12 -translate-y-full bg-gradient-to-b from-transparent via-[color:rgb(34_211_238/0.10)] to-transparent transition-transform duration-700 group-hover:translate-y-[400%]"
@@ -154,21 +126,21 @@ function SystemCard({
           {system.tagline}
         </p>
 
-        {/* Stack chips */}
+        {/* Stack chips (lighter) */}
         <div className="flex flex-wrap gap-1.5">
-          {system.stack.map((s) => (
+          {system.stack.slice(0, 4).map((s) => (
             <span
               key={s}
-              className="inline-flex items-center border border-[var(--color-grid)] px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--color-mid)]"
+              className="inline-flex items-center px-2 py-0.5 text-[11px] tracking-[0.02em] text-[var(--color-mid)] border border-[var(--color-grid)]"
             >
               {s}
             </span>
           ))}
         </div>
 
-        {/* Metrics row */}
+        {/* Just the two most impactful metrics */}
         <div className="grid grid-cols-2 gap-3 border-t border-[var(--color-grid)] pt-4">
-          {system.metrics.slice(0, 4).map((m) => (
+          {system.metrics.slice(0, 2).map((m) => (
             <MetricCounter key={m.label} value={m.value} label={m.label} />
           ))}
         </div>
@@ -178,7 +150,7 @@ function SystemCard({
 }
 
 /* ──────────────────────────────────────────────────────────────────────────────
-   Mission Detail overlay
+   Case Study overlay (formerly Mission Detail)
    ────────────────────────────────────────────────────────────────────────────── */
 function MissionDetail({
   system,
@@ -187,18 +159,21 @@ function MissionDetail({
   system: System;
   onClose: () => void;
 }) {
-  const tone =
-    system.status === "DEPLOYED"
-      ? "cyan"
-      : system.status === "ALPHA"
-      ? "amber"
-      : "violet";
+  const onJumpContact = (e: React.MouseEvent) => {
+    e.preventDefault();
+    onClose();
+    setTimeout(() => {
+      const el = document.getElementById("contact");
+      if (!el) return;
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 250);
+  };
 
   return (
     <motion.div
       role="dialog"
       aria-modal="true"
-      aria-label={`Mission Detail · ${system.title}`}
+      aria-label={`Case study · ${system.title}`}
       className="fixed inset-0 z-[var(--z-overlay)] flex items-stretch overflow-hidden"
     >
       <motion.div
@@ -219,26 +194,26 @@ function MissionDetail({
         className="relative z-[1] m-0 flex w-full flex-col overflow-y-auto md:m-6 md:rounded-none"
       >
         <HudPanel
-          live={system.status === "DEPLOYED"}
-          code={`${system.code} // MISSION DETAIL`}
-          tag={
-            <div className="flex items-center gap-3">
-              <StatusPill tone={tone as any}>{system.status}</StatusPill>
-              <button
-                onClick={onClose}
-                className="inline-flex items-center gap-2 border border-[var(--color-grid)] px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--color-mid)] hover:border-[var(--color-hi)] hover:text-[var(--color-hi)]"
-              >
-                CLOSE · ESC
-              </button>
-            </div>
-          }
           bodyClassName="grid gap-8 md:grid-cols-12"
           className="bg-[var(--color-panel)]"
         >
+          {/* Close button */}
+          <button
+            onClick={onClose}
+            aria-label="Close case study"
+            className="absolute right-4 top-4 z-[2] flex h-9 w-9 items-center justify-center text-[var(--color-mid)] transition-colors hover:text-[var(--color-hi)]"
+          >
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M3 3L13 13M13 3L3 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+            </svg>
+          </button>
+
           {/* Left: title + tagline + diagram or 3D mesh */}
-          <div className="md:col-span-7 flex flex-col gap-6">
+          <div className="md:col-span-7 flex flex-col gap-6 pt-2">
             <div>
-              <div className="text-hud-label mb-2">{system.category}</div>
+              <div className="mb-2 text-[12px] tracking-[0.04em] text-[var(--color-mid)]">
+                {system.category}
+              </div>
               <h3 className="text-[clamp(1.8rem,3.4vw,2.8rem)] font-bold leading-[1] tracking-[-0.02em]">
                 {system.title}
               </h3>
@@ -267,8 +242,8 @@ function MissionDetail({
                 }}
               />
               {system.hasMesh && (
-                <div className="absolute left-3 top-3 font-mono text-[10px] tracking-[0.18em] text-[var(--color-cyan)]">
-                  3D · DRAG TO ORBIT
+                <div className="absolute left-3 top-3 text-[11px] tracking-[0.04em] text-[var(--color-cyan)]">
+                  Drag to orbit
                 </div>
               )}
             </div>
@@ -281,15 +256,17 @@ function MissionDetail({
             </div>
           </div>
 
-          {/* Right: stack, outcomes, build log */}
-          <div className="md:col-span-5 flex flex-col gap-6">
+          {/* Right: stack + outcomes */}
+          <div className="md:col-span-5 flex flex-col gap-6 pt-2">
             <div>
-              <div className="text-hud-label mb-2">STACK</div>
+              <div className="mb-2 text-[12px] tracking-[0.04em] text-[var(--color-mid)]">
+                Stack
+              </div>
               <div className="flex flex-wrap gap-1.5">
                 {system.stack.map((s) => (
                   <span
                     key={s}
-                    className="inline-flex items-center border border-[var(--color-grid)] px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--color-hi)]"
+                    className="inline-flex items-center border border-[var(--color-grid)] px-2 py-0.5 text-[12px] tracking-[0.02em] text-[var(--color-hi)]"
                   >
                     {s}
                   </span>
@@ -298,7 +275,9 @@ function MissionDetail({
             </div>
 
             <div>
-              <div className="text-hud-label mb-2">OUTCOMES</div>
+              <div className="mb-2 text-[12px] tracking-[0.04em] text-[var(--color-mid)]">
+                Outcomes
+              </div>
               <ul className="space-y-2">
                 {system.outcomes.map((o) => (
                   <li
@@ -316,37 +295,9 @@ function MissionDetail({
               </ul>
             </div>
 
-            <div>
-              <div className="text-hud-label mb-2">BUILD LOG</div>
-              <ul className="space-y-3 border-l border-[var(--color-grid)] pl-4">
-                {system.buildLog.map((b) => (
-                  <li key={b.stamp}>
-                    <div className="font-mono text-[11px] text-[var(--color-cyan)]">
-                      {b.stamp}
-                    </div>
-                    <div className="text-[14px] text-[var(--color-mid)]">
-                      {b.entry}
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
             <div className="mt-2">
-              <CtaButton
-                href={`#contact?stack=${system.id}`}
-                onClick={(e: any) => {
-                  e.preventDefault();
-                  onClose();
-                  setTimeout(() => {
-                    const el = document.getElementById("contact");
-                    if (!el) return;
-                    history.replaceState(null, "", `#contact?stack=${system.id}`);
-                    el.scrollIntoView({ behavior: "smooth", block: "start" });
-                  }, 250);
-                }}
-              >
-                Initiate Build
+              <CtaButton href="#contact" onClick={onJumpContact as any}>
+                Get in touch
               </CtaButton>
             </div>
           </div>
@@ -355,6 +306,3 @@ function MissionDetail({
     </motion.div>
   );
 }
-
-// quiet down unused-import linting
-void cn;

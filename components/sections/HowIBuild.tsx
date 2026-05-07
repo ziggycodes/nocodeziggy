@@ -3,7 +3,6 @@
 import { useEffect, useRef } from "react";
 import { motion } from "motion/react";
 import { SectionHeader } from "@/components/ui/SectionHeader";
-import { StatusPill } from "@/components/ui/StatusPill";
 
 type Station = {
   code: string;
@@ -121,16 +120,14 @@ export function HowIBuild() {
 
       <div className="relative mx-auto w-full max-w-[1400px] px-6 md:px-10 lg:absolute lg:left-0 lg:right-0 lg:top-0 lg:z-10 lg:h-full lg:flex lg:flex-col lg:px-10 lg:py-10">
         <SectionHeader
-          code="SEC-02"
-          eyebrow="HOW I BUILD"
+          eyebrow="Process"
           title={
             <>
               From idea to running system —{" "}
               <span className="text-[var(--color-mid)]">in four moves.</span>
             </>
           }
-          description="Every system I ship goes through the same four-stage pipeline. No mystery, no agency theatrics."
-          meta={<StatusPill tone="cyan">PROCESS</StatusPill>}
+          description="Every system I ship goes through the same four-stage pipeline. No mystery, no theatrics."
         />
 
         <div className="mt-10 hidden lg:flex lg:flex-1 lg:items-center lg:justify-start lg:overflow-hidden">
@@ -175,20 +172,20 @@ function StationCard({
       }
     >
       <div className="relative border border-[var(--color-grid)] bg-[var(--color-panel)] p-6 md:p-8">
-        {/* corner dots */}
+        {/* corner dots — brand identity from the lockup */}
         <span className="absolute -left-[3px] -top-[3px] h-1.5 w-1.5 bg-[var(--color-hi)]" />
         <span className="absolute -right-[3px] -top-[3px] h-1.5 w-1.5 bg-[var(--color-hi)]" />
         <span className="absolute -left-[3px] -bottom-[3px] h-1.5 w-1.5 bg-[var(--color-hi)]" />
         <span className="absolute -right-[3px] -bottom-[3px] h-1.5 w-1.5 bg-[var(--color-hi)]" />
 
-        <div className="flex items-center justify-between text-hud-label">
-          <span className="text-[var(--color-cyan)]">PHASE {station.code}</span>
-          <span className="text-[var(--color-mid)]">PIPE-NOCZ</span>
+        <div className="flex items-baseline gap-3">
+          <span className="font-mono text-[14px] text-[var(--color-cyan)]">
+            {station.code}
+          </span>
+          <h3 className="text-[clamp(2rem,4vw,3rem)] font-bold tracking-[-0.03em] leading-[0.95]">
+            {station.title}
+          </h3>
         </div>
-
-        <h3 className="mt-3 text-[clamp(2rem,4vw,3rem)] font-bold tracking-[-0.03em] leading-[0.95]">
-          {station.title}
-        </h3>
 
         <p className="mt-3 max-w-[42ch] text-[15px] leading-relaxed text-[var(--color-mid)]">
           {station.blurb}
@@ -203,11 +200,11 @@ function StationCard({
           {station.detail.map((d) => (
             <li
               key={d}
-              className="flex items-start gap-2 font-mono text-[12px] text-[var(--color-hi)]"
+              className="flex items-start gap-2 text-[14px] text-[var(--color-hi)]"
             >
               <span
                 aria-hidden
-                className="mt-1.5 h-px w-3 shrink-0 bg-[var(--color-cyan)]"
+                className="mt-2 h-px w-3 shrink-0 bg-[var(--color-cyan)]"
               />
               {d}
             </li>

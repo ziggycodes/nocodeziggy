@@ -14,15 +14,15 @@ type Props = {
   React.ComponentPropsWithoutRef<"button">;
 
 /**
- * Tactical CTA. Renders an <a> when href is provided, else <button>.
- * Corner ticks expand outward on hover (echo of HudPanel motif).
+ * Clean primary / ghost CTA. No HUD chrome — just cyan fill or hairline border,
+ * with a subtle hover lift + brightening.
  */
 export const CtaButton = forwardRef<HTMLElement, Props>(function CtaButton(
   { variant = "primary", size = "md", children, className, href, ...rest },
   ref
 ) {
   const Comp = (href ? "a" : "button") as any;
-  const padding = size === "lg" ? "px-7 py-4 text-[13px]" : "px-5 py-3 text-[12px]";
+  const padding = size === "lg" ? "px-7 py-4 text-[14px]" : "px-5 py-3 text-[13px]";
   const isPrimary = variant === "primary";
 
   return (
@@ -30,7 +30,7 @@ export const CtaButton = forwardRef<HTMLElement, Props>(function CtaButton(
       ref={ref as any}
       href={href}
       className={cn(
-        "group relative inline-flex items-center gap-3 font-medium uppercase tracking-[0.18em] transition-[transform,filter,background] active:scale-[0.99]",
+        "group relative inline-flex items-center gap-2 font-medium tracking-[0.02em] transition-[transform,filter,background,border-color,color] duration-200 active:scale-[0.99] hover:-translate-y-px",
         padding,
         isPrimary
           ? "bg-[var(--color-cyan)] text-[var(--color-void)] hover:brightness-110"
@@ -40,42 +40,16 @@ export const CtaButton = forwardRef<HTMLElement, Props>(function CtaButton(
       style={isPrimary ? { boxShadow: "0 0 32px var(--color-cyan-glow)" } : undefined}
       {...rest}
     >
-      {/* Corner ticks */}
-      <Tick className="-left-[1px] -top-[1px] border-l border-t" primary={isPrimary} />
-      <Tick className="-right-[1px] -top-[1px] border-r border-t" primary={isPrimary} />
-      <Tick className="-left-[1px] -bottom-[1px] border-l border-b" primary={isPrimary} />
-      <Tick className="-right-[1px] -bottom-[1px] border-r border-b" primary={isPrimary} />
-
-      {isPrimary && (
-        <span
-          aria-hidden
-          className="h-1 w-1 rounded-full bg-[var(--color-void)] group-hover:scale-125 transition-transform"
-        />
-      )}
       <span>{children}</span>
-      {!isPrimary && (
-        <span
-          aria-hidden
-          className="font-mono text-[var(--color-cyan)] transition-transform group-hover:translate-x-0.5"
-        >
-          →
-        </span>
-      )}
+      <span
+        aria-hidden
+        className={cn(
+          "font-mono transition-transform group-hover:translate-x-0.5",
+          isPrimary ? "text-[var(--color-void)]" : "text-[var(--color-cyan)]"
+        )}
+      >
+        →
+      </span>
     </Comp>
   );
 });
-
-function Tick({ className, primary }: { className?: string; primary?: boolean }) {
-  return (
-    <span
-      aria-hidden
-      className={cn(
-        "absolute h-2 w-2 transition-transform duration-200 group-hover:scale-150",
-        primary
-          ? "border-[color:rgb(0_0_0/0.5)]"
-          : "border-[var(--color-cyan)] opacity-0 group-hover:opacity-100",
-        className
-      )}
-    />
-  );
-}

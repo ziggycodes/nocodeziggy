@@ -8,9 +8,8 @@ const MARKERS = [
   { id: "lab", label: "01" },
   { id: "build", label: "02" },
   { id: "media", label: "03" },
-  { id: "stacks", label: "04" },
-  { id: "experimental", label: "05" },
-  { id: "contact", label: "06" },
+  { id: "experimental", label: "04" },
+  { id: "contact", label: "05" },
 ];
 
 export function ScrollProgress() {
