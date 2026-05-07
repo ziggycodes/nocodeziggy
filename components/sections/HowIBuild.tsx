@@ -130,8 +130,8 @@ export function HowIBuild() {
           description="Every system I ship goes through the same four-stage pipeline. No mystery, no theatrics."
         />
 
-        <div className="mt-10 hidden lg:flex lg:flex-1 lg:items-center lg:justify-start lg:overflow-hidden">
-          <div ref={trackRef} className="relative flex w-max items-stretch gap-10 pr-[20vw]">
+        <div className="mt-6 hidden lg:mt-4 lg:flex lg:flex-1 lg:items-center lg:justify-start lg:overflow-hidden">
+          <div ref={trackRef} className="relative flex w-max items-stretch gap-8 pr-[20vw]">
             <ConnectorLine />
             {STATIONS.map((s, i) => (
               <StationCard key={s.code} station={s} index={i} pinned />
@@ -171,40 +171,48 @@ function StationCard({
           : "relative w-full"
       }
     >
-      <div className="relative border border-[var(--color-grid)] bg-[var(--color-panel)] p-6 md:p-8">
+      <div className="relative border border-[var(--color-grid)] bg-[var(--color-panel)] p-5 md:p-6">
         {/* corner dots — brand identity from the lockup */}
         <span className="absolute -left-[3px] -top-[3px] h-1.5 w-1.5 bg-[var(--color-hi)]" />
         <span className="absolute -right-[3px] -top-[3px] h-1.5 w-1.5 bg-[var(--color-hi)]" />
         <span className="absolute -left-[3px] -bottom-[3px] h-1.5 w-1.5 bg-[var(--color-hi)]" />
         <span className="absolute -right-[3px] -bottom-[3px] h-1.5 w-1.5 bg-[var(--color-hi)]" />
 
-        <div className="flex items-baseline gap-3">
-          <span className="font-mono text-[14px] text-[var(--color-cyan)]">
-            {station.code}
-          </span>
-          <h3 className="text-[clamp(2rem,4vw,3rem)] font-bold tracking-[-0.03em] leading-[0.95]">
-            {station.title}
-          </h3>
+        <div className="mb-3 inline-flex items-center gap-2 border border-[color:rgb(34_211_238/0.4)] px-2 py-1 font-mono text-[11px] tracking-[0.08em] text-[var(--color-cyan)] uppercase">
+          Stage {station.code} of 04
         </div>
 
-        <p className="mt-3 max-w-[42ch] text-[15px] leading-relaxed text-[var(--color-mid)]">
+        <h3 className="text-[clamp(1.5rem,3vw,2.25rem)] font-bold tracking-[-0.03em] leading-[1]">
+          {station.title}
+        </h3>
+
+        <p className="mt-2 max-w-[42ch] text-[14px] leading-relaxed text-[var(--color-mid)]">
           {station.blurb}
         </p>
 
         {/* Diagram canvas */}
-        <div className="mt-6 aspect-[16/10] w-full overflow-hidden border border-[var(--color-grid)] bg-[var(--color-void)]">
+        <div className="relative mt-4 aspect-[16/7] w-full overflow-hidden border border-[var(--color-grid)] bg-[var(--color-void)]">
+          {/* Self-labelling overlay so the picture is never anonymous */}
+          <div className="pointer-events-none absolute left-3 top-3 z-[1] flex items-baseline gap-2">
+            <span className="font-mono text-[11px] tracking-[0.04em] text-[var(--color-cyan)]">
+              {station.code}
+            </span>
+            <span className="text-[11px] tracking-[0.08em] text-[var(--color-mid)] uppercase">
+              {station.title}
+            </span>
+          </div>
           <StationGlyph kind={station.glyph} />
         </div>
 
-        <ul className="mt-6 space-y-2">
+        <ul className="mt-4 space-y-1.5">
           {station.detail.map((d) => (
             <li
               key={d}
-              className="flex items-start gap-2 text-[14px] text-[var(--color-hi)]"
+              className="flex items-start gap-2 text-[13px] text-[var(--color-hi)]"
             >
               <span
                 aria-hidden
-                className="mt-2 h-px w-3 shrink-0 bg-[var(--color-cyan)]"
+                className="mt-[7px] h-px w-3 shrink-0 bg-[var(--color-cyan)]"
               />
               {d}
             </li>
