@@ -100,14 +100,14 @@ export function TerminalLine({
         className
       )}
     >
-      <span className="text-[var(--color-cyan)] mr-1">{prompt}</span>
+      <span className="text-[var(--color-accent)] mr-1">{prompt}</span>
       {shown}
       {caret && (
         <span
           aria-hidden
           className={cn(
             "ml-0.5 inline-block h-3 w-1.5 align-[-2px]",
-            done ? "bg-[var(--color-cyan)]" : "bg-[var(--color-hi)]",
+            done ? "bg-[var(--color-accent)]" : "bg-[var(--color-hi)]",
             caretClassName
           )}
           style={{ animation: "nocz-blink 0.85s steps(1) infinite" }}

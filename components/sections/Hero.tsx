@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { CtaButton } from "@/components/ui/CtaButton";
@@ -53,6 +54,15 @@ export function Hero() {
         {!reducedMotion && visible && <HeroLabScene lowPower={lowPower} />}
         {/* Soft grid wash + vignette */}
         <div className="pointer-events-none absolute inset-0 grid-floor opacity-40" />
+        {/* Subtle top gradient wash (premium, low-sat) */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(120% 55% at 50% 0%, rgba(143,176,214,0.14) 0%, rgba(0,0,0,0) 55%)",
+          }}
+        />
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0"
@@ -66,9 +76,41 @@ export function Hero() {
       {/* CONTENT */}
       <div className="relative z-10 flex min-h-screen flex-col justify-center px-6 py-24 md:px-12 md:py-28">
         <div className="mx-auto w-full max-w-[1400px]">
-          <CyclingHeadline lines={[...profile.hero.headlines]} />
-          <Subline text={profile.hero.sub} />
-          <CtaRow />
+          <div className="grid items-center gap-10 md:grid-cols-[1fr_auto] md:gap-14">
+            <div>
+              <CyclingHeadline lines={[...profile.hero.headlines]} />
+              <Subline text={profile.hero.sub} />
+              <CtaRow />
+            </div>
+
+            <div className="hidden md:flex items-center justify-center">
+              <div className="relative">
+                <div
+                  aria-hidden
+                  className="absolute -inset-10 rounded-full blur-3xl"
+                  style={{
+                    background:
+                      "radial-gradient(circle at 50% 45%, rgba(143,176,214,0.16) 0%, rgba(0,0,0,0) 65%)",
+                  }}
+                />
+                <div className="relative h-[260px] w-[260px] lg:h-[300px] lg:w-[300px] rounded-full border border-[var(--color-grid)] bg-[color:rgb(0_0_0/0.35)] p-1.5 backdrop-blur-md">
+                  <div
+                    className="h-full w-full rounded-full"
+                    style={{ boxShadow: "0 0 0 1px rgba(255,255,255,0.06), 0 0 34px var(--color-accent-glow)" }}
+                  >
+                    <Image
+                      src="/hero/me.png"
+                      alt={`${profile.handle} portrait`}
+                      width={512}
+                      height={512}
+                      priority
+                      className="h-full w-full rounded-full object-cover"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -128,32 +170,11 @@ function CyclingHeadline({ lines }: { lines: string[] }) {
 }
 
 function GlitchWord({ text }: { text: string }) {
-  const [hover, setHover] = useState(false);
   return (
     <span
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-      className="relative inline-block"
+      className="relative inline-block transition-colors duration-200 ease-out hover:text-[var(--color-accent-soft)]"
     >
-      <span className="relative z-[1]">{text}</span>
-      {hover && (
-        <>
-          <span
-            aria-hidden
-            className="absolute inset-0 text-[var(--color-cyan)] mix-blend-screen pointer-events-none"
-            style={{ transform: "translate(-1px, 0)", opacity: 0.85 }}
-          >
-            {text}
-          </span>
-          <span
-            aria-hidden
-            className="absolute inset-0 text-[#A78BFA] mix-blend-screen pointer-events-none"
-            style={{ transform: "translate(1px, 0)", opacity: 0.6 }}
-          >
-            {text}
-          </span>
-        </>
-      )}
+      {text}
     </span>
   );
 }

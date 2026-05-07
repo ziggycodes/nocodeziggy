@@ -3,12 +3,11 @@ export const profile = {
   role: "Automation Architect / No-Code Builder / AI Operator",
   location: "REMOTE / EU",
   utc: "UTC+1",
-  email: "ziggy@nocodeziggy.com",
+  email: "isaac@nocodeziggy.com",
   socials: {
-    youtube: "https://youtube.com/@nocodeziggy",
     x: "https://x.com/nocodeziggy",
     github: "https://github.com/nocodeziggy",
-    linkedin: "https://linkedin.com/in/nocodeziggy",
+    linkedin: "https://www.linkedin.com/in/isaac-ayodele-1a0208168/",
   },
   hero: {
     headlines: [

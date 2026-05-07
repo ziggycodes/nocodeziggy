@@ -91,7 +91,7 @@ function SystemCard({
       className="group relative block w-full text-left"
     >
       <HudPanel
-        className="hover:border-[color:rgb(34_211_238/0.4)] transition-colors"
+        className="hover:border-[color:rgb(143_176_214/0.40)] transition-colors"
         bodyClassName="flex flex-col gap-4"
       >
         {/* Title row */}
@@ -106,7 +106,7 @@ function SystemCard({
           </div>
           <span
             aria-hidden
-            className="font-mono text-[var(--color-mid)] text-[18px] transition-transform group-hover:translate-x-0.5 group-hover:text-[var(--color-cyan)]"
+            className="font-mono text-[var(--color-mid)] text-[18px] transition-transform group-hover:translate-x-0.5 group-hover:text-[var(--color-accent)]"
           >
             ↗
           </span>
@@ -116,7 +116,7 @@ function SystemCard({
         <div className="relative aspect-[16/8] w-full overflow-hidden border border-[var(--color-grid)] bg-[var(--color-void)]">
           <span
             aria-hidden
-            className="pointer-events-none absolute inset-x-0 top-0 h-12 -translate-y-full bg-gradient-to-b from-transparent via-[color:rgb(34_211_238/0.10)] to-transparent transition-transform duration-700 group-hover:translate-y-[400%]"
+            className="pointer-events-none absolute inset-x-0 top-0 h-12 -translate-y-full bg-gradient-to-b from-transparent via-[color:rgb(143_176_214/0.09)] to-transparent transition-transform duration-700 group-hover:translate-y-[400%]"
           />
           <NodeFlowSVG nodes={system.nodes} edges={system.edges} density="compact" />
         </div>
@@ -194,7 +194,7 @@ function MissionDetail({
         className="relative z-[1] m-0 flex w-full flex-col overflow-y-auto md:m-6 md:rounded-none"
       >
         <HudPanel
-          bodyClassName="grid gap-8 md:grid-cols-12"
+          bodyClassName="grid gap-6 md:grid-cols-12"
           className="bg-[var(--color-panel)]"
         >
           {/* Close button */}
@@ -222,7 +222,7 @@ function MissionDetail({
               </p>
             </div>
 
-            <div className="relative aspect-[4/3] w-full overflow-hidden border border-[var(--color-grid)] bg-[var(--color-void)]">
+            <div className="relative aspect-[16/10] max-h-[46vh] w-full overflow-hidden border border-[var(--color-grid)] bg-[var(--color-void)]">
               {system.hasMesh ? (
                 <AgentMeshScene />
               ) : (
@@ -241,11 +241,6 @@ function MissionDetail({
                     "radial-gradient(120% 80% at 50% 60%, transparent 30%, rgba(0,0,0,0.6) 100%)",
                 }}
               />
-              {system.hasMesh && (
-                <div className="absolute left-3 top-3 text-[11px] tracking-[0.04em] text-[var(--color-cyan)]">
-                  Drag to orbit
-                </div>
-              )}
             </div>
 
             {/* Metrics */}
@@ -286,8 +281,8 @@ function MissionDetail({
                   >
                     <span
                       aria-hidden
-                      className="mt-2 inline-block h-1 w-1 shrink-0 rounded-full bg-[var(--color-cyan)]"
-                      style={{ boxShadow: "0 0 6px var(--color-cyan-glow)" }}
+                      className="mt-2 inline-block h-1 w-1 shrink-0 rounded-full bg-[var(--color-accent)]"
+                      style={{ boxShadow: "0 0 6px var(--color-accent-glow)" }}
                     />
                     {o}
                   </li>
@@ -302,6 +297,10 @@ function MissionDetail({
             </div>
           </div>
         </HudPanel>
+        <div
+          aria-hidden
+          className="pointer-events-none sticky bottom-0 -mt-12 h-12 w-full bg-gradient-to-t from-[var(--color-panel)] to-transparent"
+        />
       </motion.div>
     </motion.div>
   );

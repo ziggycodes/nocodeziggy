@@ -54,10 +54,10 @@ export function ScrollProgress() {
     >
       <div className="relative h-[60vh] w-px bg-[var(--color-grid)]">
         <span
-          className="absolute left-0 top-0 w-px bg-[var(--color-cyan)] transition-[height] duration-150"
+          className="absolute left-0 top-0 w-px bg-[var(--color-accent)] transition-[height] duration-150"
           style={{
             height: `${progress * 100}%`,
-            boxShadow: "0 0 8px var(--color-cyan-glow)",
+            boxShadow: "0 0 8px var(--color-accent-glow)",
           }}
         />
         {MARKERS.map((m, i) => {
@@ -76,9 +76,9 @@ export function ScrollProgress() {
                 <span
                   className={cn(
                     "h-1.5 w-1.5 rounded-full transition-all",
-                    isActive ? "bg-[var(--color-cyan)]" : "bg-[var(--color-dim)]"
+                    isActive ? "bg-[var(--color-accent)]" : "bg-[var(--color-dim)]"
                   )}
-                  style={isActive ? { boxShadow: "0 0 8px var(--color-cyan-glow)" } : undefined}
+                  style={isActive ? { boxShadow: "0 0 8px var(--color-accent-glow)" } : undefined}
                 />
               </div>
             </div>

@@ -97,9 +97,9 @@ export function Nav() {
                     aria-hidden
                     className={cn(
                       "h-1 w-1 rounded-full transition-colors",
-                      isActive ? "bg-[var(--color-cyan)]" : "bg-[var(--color-dim)]"
+                      isActive ? "bg-[var(--color-accent)]" : "bg-[var(--color-dim)]"
                     )}
-                    style={isActive ? { boxShadow: "0 0 10px var(--color-cyan-glow)" } : undefined}
+                    style={isActive ? { boxShadow: "0 0 10px var(--color-accent-glow)" } : undefined}
                   />
                   {item.label}
                   {isActive && (
@@ -120,8 +120,8 @@ export function Nav() {
         <a
           href="#contact"
           onClick={onJump("contact")}
-          className="group relative inline-flex items-center gap-2 rounded-full bg-[var(--color-cyan)] px-4 py-1.5 text-[12px] font-medium tracking-[0.04em] text-[var(--color-void)] transition-[transform,filter] hover:brightness-110 active:scale-[0.98]"
-          style={{ boxShadow: "0 0 24px var(--color-cyan-glow)" }}
+          className="group relative inline-flex items-center gap-2 rounded-full bg-[var(--color-accent)] px-4 py-1.5 text-[12px] font-medium tracking-[0.04em] text-[var(--color-void)] transition-[transform,filter] hover:brightness-110 active:scale-[0.98]"
+          style={{ boxShadow: "0 0 18px var(--color-accent-glow)" }}
         >
           Contact
         </a>

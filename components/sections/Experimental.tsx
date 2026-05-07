@@ -15,7 +15,7 @@ const STATUS_LABEL: Record<Experiment["status"], string> = {
 const STATUS_DOT: Record<Experiment["status"], string> = {
   PROTOTYPING: "bg-[#A78BFA]",
   ALPHA: "bg-[#F59E0B]",
-  TESTING: "bg-[var(--color-cyan)]",
+  TESTING: "bg-[var(--color-accent)]",
 };
 
 export function Experimental() {
@@ -89,16 +89,16 @@ function ExperimentCard({ exp, index }: { exp: Experiment; index: number }) {
           <div className="mt-2">
             <div className="flex items-center justify-between text-[12px] tracking-[0.02em] text-[var(--color-mid)]">
               <span>Progress</span>
-              <span className="font-mono text-[var(--color-cyan)]">
+              <span className="font-mono text-[var(--color-accent)]">
                 {exp.progress.toString().padStart(2, "0")}%
               </span>
             </div>
             <div className="mt-2 h-1 w-full bg-[var(--color-grid)] relative overflow-hidden">
               <motion.div
-                className="absolute left-0 top-0 h-full bg-[var(--color-cyan)]"
+                className="absolute left-0 top-0 h-full bg-[var(--color-accent)]"
                 animate={{ width: `${progress}%` }}
                 transition={{ duration: 1.0, ease: [0.22, 1, 0.36, 1] }}
-                style={{ boxShadow: "0 0 8px var(--color-cyan-glow)" }}
+                style={{ boxShadow: "0 0 8px var(--color-accent-glow)" }}
               />
             </div>
             <div className="mt-2 text-[11px] text-[var(--color-dim)]">

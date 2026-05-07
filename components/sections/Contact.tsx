@@ -181,18 +181,13 @@ export function Contact() {
                 Direct channels
               </div>
               <Channel
-                label="YouTube"
-                handle="@nocodeziggy"
-                href={profile.socials.youtube}
-              />
-              <Channel
                 label="X"
                 handle="@nocodeziggy"
                 href={profile.socials.x}
               />
               <Channel
                 label="LinkedIn"
-                handle="/in/nocodeziggy"
+                handle="/in/isaac-ayodele-1a0208168"
                 href={profile.socials.linkedin}
               />
               <Channel
@@ -216,8 +211,8 @@ export function Contact() {
                 <span className="text-[var(--color-mid)]">Response time</span>
                 <span className="text-[var(--color-hi)]">&lt; 24 hours</span>
               </div>
-              <div className="flex items-center gap-2 pt-2 text-[13px] text-[var(--color-cyan)]">
-                <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-[var(--color-cyan)] animate-pulse" />
+              <div className="flex items-center gap-2 pt-2 text-[13px] text-[var(--color-accent)]">
+                <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-[var(--color-accent)] animate-pulse" />
                 Currently taking projects
               </div>
             </HudPanel>
@@ -252,7 +247,7 @@ function Field({
     <label htmlFor={id} className="flex flex-col gap-2">
       <span className="text-[12px] tracking-[0.04em] text-[var(--color-mid)]">
         {label}
-        {required && <span className="ml-1 text-[var(--color-cyan)]">*</span>}
+        {required && <span className="ml-1 text-[var(--color-accent)]">*</span>}
       </span>
       <input
         id={id}
@@ -261,7 +256,7 @@ function Field({
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         required={required}
-        className="w-full border border-[var(--color-grid)] bg-[var(--color-void)] px-3 py-3 text-[15px] text-[var(--color-hi)] placeholder:text-[var(--color-dim)] focus:border-[var(--color-cyan)] focus:outline-none focus-visible:outline-none transition-colors"
+        className="w-full border border-[var(--color-grid)] bg-[var(--color-void)] px-3 py-3 text-[15px] text-[var(--color-hi)] placeholder:text-[var(--color-dim)] focus:border-[var(--color-accent)] focus:outline-none focus-visible:outline-none transition-colors"
         autoComplete="off"
       />
     </label>
@@ -287,7 +282,7 @@ function TextareaField({
     <label htmlFor={id} className="flex flex-col gap-2">
       <span className="text-[12px] tracking-[0.04em] text-[var(--color-mid)]">
         {label}
-        {required && <span className="ml-1 text-[var(--color-cyan)]">*</span>}
+        {required && <span className="ml-1 text-[var(--color-accent)]">*</span>}
       </span>
       <textarea
         id={id}
@@ -296,7 +291,7 @@ function TextareaField({
         placeholder={placeholder}
         required={required}
         rows={6}
-        className="w-full resize-y border border-[var(--color-grid)] bg-[var(--color-void)] px-3 py-3 text-[15px] text-[var(--color-hi)] placeholder:text-[var(--color-dim)] focus:border-[var(--color-cyan)] focus:outline-none focus-visible:outline-none transition-colors"
+        className="w-full resize-y border border-[var(--color-grid)] bg-[var(--color-void)] px-3 py-3 text-[15px] text-[var(--color-hi)] placeholder:text-[var(--color-dim)] focus:border-[var(--color-accent)] focus:outline-none focus-visible:outline-none transition-colors"
       />
     </label>
   );
@@ -325,7 +320,7 @@ function SelectField({
           id={id}
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="w-full appearance-none border border-[var(--color-grid)] bg-[var(--color-void)] px-3 py-3 pr-10 text-[15px] text-[var(--color-hi)] focus:border-[var(--color-cyan)] focus:outline-none focus-visible:outline-none transition-colors"
+          className="w-full appearance-none border border-[var(--color-grid)] bg-[var(--color-void)] px-3 py-3 pr-10 text-[15px] text-[var(--color-hi)] focus:border-[var(--color-accent)] focus:outline-none focus-visible:outline-none transition-colors"
         >
           {options.map((o) => (
             <option key={o.id} value={o.id} className="bg-[var(--color-void)]">
@@ -356,12 +351,12 @@ function SentScreen({ onReset }: { onReset: () => void }) {
       <div className="relative">
         <span
           aria-hidden
-          className="absolute -inset-4 rounded-full border border-[color:rgb(34_211_238/0.4)] animate-pulse"
+          className="absolute -inset-4 rounded-full border border-[color:rgb(143_176_214/0.40)] animate-pulse"
         />
         <Logo withWordmark={false} size={56} />
       </div>
       <div>
-        <div className="mb-2 text-[12px] tracking-[0.04em] text-[var(--color-cyan)]">
+        <div className="mb-2 text-[12px] tracking-[0.04em] text-[var(--color-accent)]">
           Message received
         </div>
         <h3 className="text-[clamp(1.6rem,3vw,2.2rem)] font-bold tracking-tight">
@@ -378,7 +373,7 @@ function SentScreen({ onReset }: { onReset: () => void }) {
         className="mt-2 inline-flex items-center gap-2 text-[13px] text-[var(--color-mid)] hover:text-[var(--color-hi)] transition-colors"
       >
         Send another message
-        <span aria-hidden className="font-mono text-[var(--color-cyan)]">→</span>
+        <span aria-hidden className="font-mono text-[var(--color-accent)]">→</span>
       </button>
     </motion.div>
   );
@@ -407,7 +402,7 @@ function Channel({
       )}
     >
       <span className="text-[14px] text-[var(--color-hi)]">{label}</span>
-      <div className="flex items-center gap-2 text-[13px] text-[var(--color-mid)] group-hover:text-[var(--color-cyan)] transition-colors">
+      <div className="flex items-center gap-2 text-[13px] text-[var(--color-mid)] group-hover:text-[var(--color-accent)] transition-colors">
         {handle}
         <span aria-hidden className="font-mono">↗</span>
       </div>

@@ -178,11 +178,11 @@ function StationCard({
         <span className="absolute -left-[3px] -bottom-[3px] h-1.5 w-1.5 bg-[var(--color-hi)]" />
         <span className="absolute -right-[3px] -bottom-[3px] h-1.5 w-1.5 bg-[var(--color-hi)]" />
 
-        <div className="mb-3 inline-flex items-center gap-2 border border-[color:rgb(34_211_238/0.4)] px-2 py-1 font-mono text-[11px] tracking-[0.08em] text-[var(--color-cyan)] uppercase">
+        <div className="mb-3 inline-flex items-center gap-2 border border-[color:rgb(143_176_214/0.4)] px-2 py-1 font-mono text-[11px] tracking-[0.08em] text-[var(--color-accent)] uppercase">
           Stage {station.code} of 04
         </div>
 
-        <h3 className="text-[clamp(1.5rem,3vw,2.25rem)] font-bold tracking-[-0.03em] leading-[1]">
+        <h3 className="pt-1 text-[clamp(1.5rem,3vw,2.25rem)] font-bold tracking-[-0.03em] leading-[1.12]">
           {station.title}
         </h3>
 
@@ -194,7 +194,7 @@ function StationCard({
         <div className="relative mt-4 aspect-[16/7] w-full overflow-hidden border border-[var(--color-grid)] bg-[var(--color-void)]">
           {/* Self-labelling overlay so the picture is never anonymous */}
           <div className="pointer-events-none absolute left-3 top-3 z-[1] flex items-baseline gap-2">
-            <span className="font-mono text-[11px] tracking-[0.04em] text-[var(--color-cyan)]">
+            <span className="font-mono text-[11px] tracking-[0.04em] text-[var(--color-accent)]">
               {station.code}
             </span>
             <span className="text-[11px] tracking-[0.08em] text-[var(--color-mid)] uppercase">
@@ -212,7 +212,7 @@ function StationCard({
             >
               <span
                 aria-hidden
-                className="mt-[7px] h-px w-3 shrink-0 bg-[var(--color-cyan)]"
+                className="mt-[7px] h-px w-3 shrink-0 bg-[var(--color-accent)]"
               />
               {d}
             </li>
@@ -227,7 +227,7 @@ function ConnectorLine() {
   return (
     <span
       aria-hidden
-      className="pointer-events-none absolute left-0 right-0 top-1/2 hidden h-px -translate-y-1/2 bg-gradient-to-r from-transparent via-[color:rgb(34_211_238/0.4)] to-transparent lg:block"
+      className="pointer-events-none absolute left-0 right-0 top-1/2 hidden h-px -translate-y-1/2 bg-gradient-to-r from-transparent via-[color:rgb(143_176_214/0.35)] to-transparent lg:block"
     />
   );
 }
@@ -275,7 +275,7 @@ function IdeaGlyph() {
       {/* Arrow morph */}
       <motion.path
         d="M 90 50 L 130 50"
-        stroke="#22d3ee"
+        stroke="#8fb0d6"
         strokeWidth="0.8"
         fill="none"
         initial={{ pathLength: 0 }}
@@ -284,7 +284,7 @@ function IdeaGlyph() {
       />
       <motion.path
         d="M 130 50 L 124 46 M 130 50 L 124 54"
-        stroke="#22d3ee"
+        stroke="#8fb0d6"
         strokeWidth="0.8"
         fill="none"
         initial={{ opacity: 0 }}
@@ -416,8 +416,8 @@ function GraphGlyph() {
             cx={n.x}
             cy={n.y}
             r="2.6"
-            fill={i === 3 ? "#22d3ee" : "#FFFFFF"}
-            stroke={i === 3 ? "#22d3ee" : "rgba(255,255,255,0.4)"}
+            fill={i === 3 ? "#8fb0d6" : "#FFFFFF"}
+            stroke={i === 3 ? "#8fb0d6" : "rgba(255,255,255,0.4)"}
             strokeWidth="0.4"
             initial={{ scale: 0 }}
             whileInView={{ scale: 1 }}
@@ -466,7 +466,7 @@ function GraphGlyph() {
 
       {/* particles */}
       {[0, 1, 2].map((i) => (
-        <circle key={i} r="0.9" fill="#22d3ee">
+        <circle key={i} r="0.9" fill="#8fb0d6">
           <animateMotion
             dur="2.2s"
             begin={`${i * 0.6}s`}
@@ -531,7 +531,7 @@ function ScaleGlyph() {
           y={m.y}
           fontSize="6"
           fontFamily="var(--font-mono)"
-          fill="#22d3ee"
+          fill="#8fb0d6"
           initial={{ opacity: 0, y: m.y + 4 }}
           whileInView={{ opacity: 1, y: m.y }}
           transition={{ delay: 1 + i * 0.15 }}
@@ -582,7 +582,7 @@ function ScaleGlyph() {
         cx="110"
         cy="60"
         r="3.2"
-        fill="#22d3ee"
+        fill="#8fb0d6"
         initial={{ scale: 0 }}
         whileInView={{ scale: 1 }}
         transition={{ delay: 1.0 }}

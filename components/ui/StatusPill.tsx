@@ -2,11 +2,11 @@ import { cn } from "@/lib/cn";
 
 const TONES = {
   cyan: {
-    text: "text-[var(--color-cyan)]",
-    bg: "bg-[color:rgb(34_211_238/0.08)]",
-    border: "border-[color:rgb(34_211_238/0.4)]",
-    dot: "bg-[var(--color-cyan)]",
-    glow: { boxShadow: "0 0 8px var(--color-cyan-glow)" },
+    text: "text-[var(--color-accent)]",
+    bg: "bg-[color:rgb(143_176_214/0.10)]",
+    border: "border-[color:rgb(143_176_214/0.40)]",
+    dot: "bg-[var(--color-accent)]",
+    glow: { boxShadow: "0 0 8px var(--color-accent-glow)" },
   },
   violet: {
     text: "text-[#A78BFA]",

@@ -23,16 +23,6 @@ export function Footer() {
           <ul className="space-y-2 text-[14px]">
             <li>
               <a
-                href={profile.socials.youtube}
-                target="_blank"
-                rel="noreferrer"
-                className="text-[var(--color-mid)] hover:text-[var(--color-hi)] transition-colors"
-              >
-                YouTube
-              </a>
-            </li>
-            <li>
-              <a
                 href={profile.socials.x}
                 target="_blank"
                 rel="noreferrer"
@@ -66,8 +56,8 @@ export function Footer() {
           <div className="mb-3 text-[12px] tracking-[0.04em] text-[var(--color-mid)]">
             Status
           </div>
-          <div className="flex items-center gap-2 text-[13px] text-[var(--color-cyan)]">
-            <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-[var(--color-cyan)] animate-pulse" />
+          <div className="flex items-center gap-2 text-[13px] text-[var(--color-accent)]">
+            <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-[var(--color-accent)] animate-pulse" />
             Available
           </div>
           <div className="mt-1 text-[12px] text-[var(--color-mid)]">

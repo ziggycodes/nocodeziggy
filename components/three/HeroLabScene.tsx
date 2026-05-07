@@ -42,7 +42,7 @@ function SceneRoot({ lowPower }: Props) {
   return (
     <>
       <ambientLight intensity={0.15} />
-      <pointLight position={[10, 10, 10]} intensity={0.4} color="#22d3ee" />
+      <pointLight position={[10, 10, 10]} intensity={0.35} color="#8fb0d6" />
       <Topology lowPower={lowPower} />
       <HexBeacon />
       <DriftingDust lowPower={lowPower} />
@@ -187,7 +187,7 @@ function Topology({ lowPower }: Props) {
       <lineSegments geometry={lineGeo}>
         <lineBasicMaterial
           ref={linesMatRef}
-          color="#22d3ee"
+          color="#8fb0d6"
           transparent
           opacity={0.18}
         />
@@ -209,7 +209,7 @@ function Topology({ lowPower }: Props) {
       <points geometry={particleGeo}>
         <pointsMaterial
           size={0.15}
-          color="#22d3ee"
+          color="#8fb0d6"
           transparent
           opacity={1}
           sizeAttenuation
@@ -247,7 +247,7 @@ function HexBeacon() {
     <group ref={ref} position={[0, 0, -3]}>
       <line>
         <primitive object={hexGeo} />
-        <lineBasicMaterial color="#22d3ee" transparent opacity={0.22} />
+        <lineBasicMaterial color="#8fb0d6" transparent opacity={0.18} />
       </line>
       {/* Corner dots — echo of logo's four-corner motif */}
       {[0, 1, 2, 3, 4, 5].map((i) => {
@@ -257,7 +257,7 @@ function HexBeacon() {
         return (
           <mesh key={i} position={[x, y, 0]}>
             <sphereGeometry args={[0.06, 8, 8]} />
-            <meshBasicMaterial color="#22d3ee" />
+            <meshBasicMaterial color="#8fb0d6" />
           </mesh>
         );
       })}

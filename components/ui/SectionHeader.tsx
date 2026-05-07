@@ -41,8 +41,8 @@ export function SectionHeader({
       >
         <span
           aria-hidden
-          className="h-px w-8 bg-[var(--color-cyan)]"
-          style={{ boxShadow: "0 0 6px var(--color-cyan-glow)" }}
+          className="h-px w-8 bg-[var(--color-accent)]"
+          style={{ boxShadow: "0 0 6px var(--color-accent-glow)" }}
         />
         <span>{eyebrow}</span>
       </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import { Canvas, useFrame } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
+import { Html, OrbitControls } from "@react-three/drei";
 import { useMemo, useRef } from "react";
 import * as THREE from "three";
 
@@ -23,7 +23,7 @@ export function AgentMeshScene() {
       gl={{ antialias: true, alpha: true }}
     >
       <ambientLight intensity={0.25} />
-      <pointLight position={[6, 6, 6]} intensity={0.7} color="#22d3ee" />
+      <pointLight position={[6, 6, 6]} intensity={0.6} color="#8fb0d6" />
       <Mesh />
       <OrbitControls
         enablePan={false}
@@ -36,7 +36,23 @@ export function AgentMeshScene() {
   );
 }
 
-const AGENT_COUNT = 13;
+const AGENT_LABELS = [
+  "ORCHESTRATOR",
+  "INTAKE",
+  "PLANNER",
+  "RESEARCH",
+  "RETRIEVAL",
+  "WRITER",
+  "EDITOR",
+  "CRITIC",
+  "QA",
+  "CODER",
+  "ANALYST",
+  "MEMORY",
+  "DISPATCH",
+];
+
+const AGENT_COUNT = AGENT_LABELS.length;
 
 function Mesh() {
   const groupRef = useRef<THREE.Group>(null);
@@ -145,7 +161,7 @@ function Mesh() {
     <group ref={groupRef}>
       {/* Edges */}
       <lineSegments geometry={lineGeo}>
-        <lineBasicMaterial color="#22d3ee" transparent opacity={0.35} />
+        <lineBasicMaterial color="#8fb0d6" transparent opacity={0.3} />
       </lineSegments>
 
       {/* Agent nodes */}
@@ -156,19 +172,40 @@ function Mesh() {
             <mesh>
               <sphereGeometry args={[isRouter ? 0.18 : 0.1, 16, 16]} />
               <meshBasicMaterial
-                color={isRouter ? "#FFFFFF" : "#22d3ee"}
+                color={isRouter ? "#FFFFFF" : "#8fb0d6"}
               />
             </mesh>
             {/* Halo */}
             <mesh>
               <ringGeometry args={[isRouter ? 0.28 : 0.18, isRouter ? 0.32 : 0.21, 32]} />
               <meshBasicMaterial
-                color={isRouter ? "#FFFFFF" : "#22d3ee"}
+                color={isRouter ? "#FFFFFF" : "#8fb0d6"}
                 transparent
                 opacity={isRouter ? 0.5 : 0.3}
                 side={THREE.DoubleSide}
               />
             </mesh>
+            {/* Label */}
+            <Html
+              position={[0, isRouter ? 0.5 : 0.32, 0]}
+              center
+              transform
+              distanceFactor={isRouter ? 10 : 12}
+              style={{ pointerEvents: "none", userSelect: "none" }}
+            >
+              <div
+                style={{
+                  fontFamily: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace",
+                  fontSize: isRouter ? 11 : 10,
+                  letterSpacing: "0.12em",
+                  color: "rgba(195, 214, 238, " + (isRouter ? "0.95" : "0.72") + ")",
+                  textShadow: "0 0 10px rgba(143, 176, 214, 0.35)",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {AGENT_LABELS[i]}
+              </div>
+            </Html>
           </group>
         );
       })}
@@ -177,7 +214,7 @@ function Mesh() {
       <points geometry={pulseGeo}>
         <pointsMaterial
           size={0.16}
-          color="#67E8F9"
+          color="#c3d6ee"
           transparent
           opacity={1}
           sizeAttenuation

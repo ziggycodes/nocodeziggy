@@ -94,7 +94,7 @@ function FilterPill({
       className={cn(
         "relative inline-flex items-center gap-2 border px-3 py-1.5 text-[12px] tracking-[0.02em] transition-colors",
         active
-          ? "border-[var(--color-cyan)] text-[var(--color-cyan)] bg-[color:rgb(34_211_238/0.08)]"
+          ? "border-[var(--color-accent)] text-[var(--color-accent)] bg-[color:rgb(143_176_214/0.10)]"
           : "border-[var(--color-grid)] text-[var(--color-mid)] hover:border-[var(--color-hi)] hover:text-[var(--color-hi)]"
       )}
     >
@@ -124,7 +124,7 @@ function FeaturedDeck({ item }: { item: (typeof media)[number] }) {
             className="pointer-events-none absolute inset-0"
             style={{
               background:
-                "radial-gradient(60% 60% at 50% 60%, rgba(34,211,238,0.18) 0%, transparent 70%), radial-gradient(40% 40% at 80% 20%, rgba(167,139,250,0.10) 0%, transparent 70%)",
+                "radial-gradient(60% 60% at 50% 60%, rgba(143,176,214,0.16) 0%, transparent 70%), radial-gradient(40% 40% at 80% 20%, rgba(167,139,250,0.08) 0%, transparent 70%)",
             }}
           />
 
@@ -133,15 +133,15 @@ function FeaturedDeck({ item }: { item: (typeof media)[number] }) {
             <div className="relative">
               <span
                 aria-hidden
-                className="absolute -inset-6 rounded-full border border-[color:rgb(34_211_238/0.4)] animate-pulse"
+                className="absolute -inset-6 rounded-full border border-[color:rgb(143_176_214/0.40)] animate-pulse"
               />
               <span
                 aria-hidden
-                className="absolute -inset-12 rounded-full border border-[color:rgb(34_211_238/0.15)]"
+                className="absolute -inset-12 rounded-full border border-[color:rgb(143_176_214/0.16)]"
               />
-              <div className="relative flex h-20 w-20 items-center justify-center border border-[var(--color-cyan)] bg-[color:rgb(0_0_0/0.6)] backdrop-blur-md transition-transform group-hover:scale-105">
+              <div className="relative flex h-20 w-20 items-center justify-center border border-[var(--color-accent)] bg-[color:rgb(0_0_0/0.6)] backdrop-blur-md transition-transform group-hover:scale-105">
                 <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-                  <polygon points="6,4 18,11 6,18" fill="#22d3ee" />
+                  <polygon points="6,4 18,11 6,18" fill="var(--color-accent)" />
                 </svg>
               </div>
             </div>
@@ -149,7 +149,7 @@ function FeaturedDeck({ item }: { item: (typeof media)[number] }) {
 
           <div className="absolute bottom-0 left-0 right-0 flex items-end justify-between gap-6 bg-gradient-to-t from-[rgb(0_0_0/0.85)] to-transparent p-6">
             <div>
-              <div className="mb-2 text-[12px] tracking-[0.04em] text-[var(--color-cyan)]">
+              <div className="mb-2 text-[12px] tracking-[0.04em] text-[var(--color-accent)]">
                 Featured
               </div>
               <h3 className="max-w-[42ch] text-[clamp(1.4rem,3vw,2.4rem)] font-bold leading-[1.05] tracking-tight">
@@ -167,7 +167,7 @@ function FeaturedDeck({ item }: { item: (typeof media)[number] }) {
           {/* Subtle scanline shimmer on hover */}
           <span
             aria-hidden
-            className="pointer-events-none absolute inset-x-0 top-0 h-24 -translate-y-full bg-gradient-to-b from-transparent via-[color:rgb(34_211_238/0.10)] to-transparent transition-transform duration-700 group-hover:translate-y-[400%]"
+            className="pointer-events-none absolute inset-x-0 top-0 h-24 -translate-y-full bg-gradient-to-b from-transparent via-[color:rgb(143_176_214/0.09)] to-transparent transition-transform duration-700 group-hover:translate-y-[400%]"
           />
         </div>
       </HudPanel>
@@ -189,7 +189,7 @@ function MediaCard({ item, index }: { item: (typeof media)[number]; index: numbe
       whileHover={{ y: -2 }}
       className="group relative block"
     >
-      <HudPanel bodyClassName="p-0" className="hover:border-[color:rgb(34_211_238/0.4)] transition-colors">
+      <HudPanel bodyClassName="p-0" className="hover:border-[color:rgb(143_176_214/0.40)] transition-colors">
         <div className="relative aspect-video w-full overflow-hidden bg-[var(--color-void)]">
           <div className="absolute inset-0 grid-floor opacity-[0.6]" />
           <div
@@ -197,14 +197,14 @@ function MediaCard({ item, index }: { item: (typeof media)[number]; index: numbe
             className="pointer-events-none absolute inset-0"
             style={{
               background:
-                "radial-gradient(50% 60% at 60% 50%, rgba(34,211,238,0.10) 0%, transparent 70%)",
+                "radial-gradient(50% 60% at 60% 50%, rgba(143,176,214,0.09) 0%, transparent 70%)",
             }}
           />
 
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="flex h-10 w-10 items-center justify-center border border-[var(--color-grid)] bg-[color:rgb(0_0_0/0.6)] transition-colors group-hover:border-[var(--color-cyan)]">
+            <div className="flex h-10 w-10 items-center justify-center border border-[var(--color-grid)] bg-[color:rgb(0_0_0/0.6)] transition-colors group-hover:border-[var(--color-accent)]">
               <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
-                <polygon points="2,1 10,5.5 2,10" fill="#FFFFFF" className="group-hover:fill-[#22d3ee]" />
+                <polygon points="2,1 10,5.5 2,10" fill="#FFFFFF" className="group-hover:fill-[var(--color-accent)]" />
               </svg>
             </div>
           </div>
@@ -215,17 +215,17 @@ function MediaCard({ item, index }: { item: (typeof media)[number]; index: numbe
 
           <span
             aria-hidden
-            className="pointer-events-none absolute inset-x-0 top-0 h-12 -translate-y-full bg-gradient-to-b from-transparent via-[color:rgb(34_211_238/0.10)] to-transparent transition-transform duration-500 group-hover:translate-y-[400%]"
+            className="pointer-events-none absolute inset-x-0 top-0 h-12 -translate-y-full bg-gradient-to-b from-transparent via-[color:rgb(143_176_214/0.09)] to-transparent transition-transform duration-500 group-hover:translate-y-[400%]"
           />
         </div>
 
         <div className="p-4">
           <div className="mb-2 flex items-center gap-2 text-[12px] tracking-[0.02em] text-[var(--color-mid)]">
-            <span className="text-[var(--color-cyan)]">{prettyCategory(item.category)}</span>
+            <span className="text-[var(--color-accent)]">{prettyCategory(item.category)}</span>
             <span aria-hidden>·</span>
             <span>{item.date}</span>
           </div>
-          <h4 className="text-[14px] font-medium leading-snug text-[var(--color-hi)] group-hover:text-[var(--color-cyan)] transition-colors">
+          <h4 className="text-[14px] font-medium leading-snug text-[var(--color-hi)] group-hover:text-[var(--color-accent)] transition-colors">
             {item.title}
           </h4>
           <p className="mt-2 line-clamp-2 text-[12.5px] leading-relaxed text-[var(--color-mid)]">
