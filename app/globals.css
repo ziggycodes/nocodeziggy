@@ -1,0 +1,248 @@
+@import "tailwindcss";
+
+/* ──────────────────────────────────────────────────────────────────────────────
+   NoCodeZiggy — Operator Lab design tokens
+   Sampled directly from public/brand/logo-{dark,light}.svg
+   ────────────────────────────────────────────────────────────────────────────── */
+@theme {
+  /* Colors ─ surfaces */
+  --color-void: #000000;
+  --color-panel: #0a0a0a;
+  --color-elev: #111111;
+  --color-grid: #1f1f1f;
+
+  /* Colors ─ text (sampled from logo wordmark) */
+  --color-hi: #ffffff;
+  --color-mid: #a3a3a3;
+  --color-dim: #555555;
+
+  /* Colors ─ the single live accent (cyan) */
+  --color-cyan: #22d3ee;
+  --color-cyan-soft: #67e8f9;
+  --color-cyan-glow: rgba(34, 211, 238, 0.18);
+
+  /* Status colors (used very sparingly) */
+  --color-status-deployed: #22d3ee;
+  --color-status-experimental: #a78bfa;
+  --color-status-prototyping: #f59e0b;
+
+  /* Fonts (provided by next/font in app/layout.tsx) */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, "Cascadia Mono", "Segoe UI Mono", monospace;
+
+  /* Type scale */
+  --text-hud: 0.6875rem;     /* 11px ─ HUD labels */
+  --text-data: 0.75rem;      /* 12px ─ metrics */
+  --text-meta: 0.8125rem;    /* 13px */
+  --text-body: 0.9375rem;    /* 15px */
+  --text-lead: 1.125rem;     /* 18px */
+  --text-h3: 1.5rem;         /* 24px */
+  --text-h2: 2.25rem;        /* 36px */
+  --text-h1: 3.5rem;         /* 56px */
+  --text-display: clamp(3.5rem, 8vw, 7.5rem); /* hero */
+
+  /* Spacing ─ tactical scale */
+  --spacing-tight: 4px;
+  --spacing-1x: 8px;
+  --spacing-2x: 16px;
+  --spacing-3x: 24px;
+  --spacing-4x: 32px;
+  --spacing-6x: 48px;
+  --spacing-8x: 64px;
+  --spacing-12x: 96px;
+  --spacing-16x: 128px;
+
+  /* Radii ─ kept low/sharp */
+  --radius-sharp: 2px;
+  --radius-soft: 4px;
+  --radius-pill: 9999px;
+
+  /* Z indices */
+  --z-cursor: 80;
+  --z-overlay: 70;
+  --z-nav: 60;
+  --z-boot: 90;
+
+  /* Easings */
+  --ease-out-cubic: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-quart: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* ──────────────────────────────────────────────────────────────────────────────
+   Base
+   ────────────────────────────────────────────────────────────────────────────── */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    color-scheme: dark;
+    background: var(--color-void);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background: var(--color-void);
+    color: var(--color-hi);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv11";
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  ::selection {
+    background: var(--color-cyan);
+    color: var(--color-void);
+  }
+
+  ::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+
+  /* Native cursor hidden on desktop where we render the custom reticle */
+  @media (hover: hover) and (pointer: fine) {
+    html.has-custom-cursor,
+    html.has-custom-cursor * {
+      cursor: none !important;
+    }
+  }
+
+  a,
+  button {
+    color: inherit;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  input,
+  textarea,
+  select,
+  button {
+    font: inherit;
+    color: inherit;
+    background: transparent;
+    border: 0;
+  }
+
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible,
+  button:focus-visible,
+  a:focus-visible {
+    outline: 1px solid var(--color-cyan);
+    outline-offset: 2px;
+  }
+
+  img,
+  svg {
+    display: block;
+    max-width: 100%;
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────────────────────
+   Reusable utilities — HUD primitives & motifs
+   ────────────────────────────────────────────────────────────────────────────── */
+@utility grid-floor {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+@utility grid-floor-fade {
+  mask-image: radial-gradient(ellipse at center, black 25%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 25%, transparent 75%);
+}
+
+@utility hud-corner {
+  position: relative;
+}
+
+@utility text-hud-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-hud);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-mid);
+}
+
+@utility text-hud-data {
+  font-family: var(--font-mono);
+  font-size: var(--text-data);
+  letter-spacing: 0.06em;
+  color: var(--color-hi);
+}
+
+@utility cyan-glow {
+  box-shadow:
+    0 0 0 1px var(--color-cyan),
+    0 0 24px var(--color-cyan-glow);
+}
+
+@utility scanline {
+  position: relative;
+  overflow: hidden;
+}
+
+/* ──────────────────────────────────────────────────────────────────────────────
+   Keyframes — atomic motion library
+   ────────────────────────────────────────────────────────────────────────────── */
+@keyframes nocz-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+@keyframes nocz-flow-x {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes nocz-pulse-dot {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+
+@keyframes nocz-glitch {
+  0%, 100% { transform: translate(0, 0); filter: none; }
+  20% { transform: translate(-1px, 0); filter: hue-rotate(5deg); }
+  40% { transform: translate(1px, 0); }
+  60% { transform: translate(0, 1px); }
+  80% { transform: translate(-1px, -1px); }
+}
+
+@keyframes nocz-marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes nocz-scanline {
+  0% { transform: translateY(-100%); opacity: 0; }
+  10% { opacity: 0.6; }
+  100% { transform: translateY(100%); opacity: 0; }
+}
+
+@keyframes nocz-edge-flow {
+  0% { stroke-dashoffset: 40; }
+  100% { stroke-dashoffset: 0; }
+}
+
+/* ──────────────────────────────────────────────────────────────────────────────
+   Reduced motion
+   ────────────────────────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
