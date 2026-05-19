@@ -186,7 +186,7 @@ Contact submissions sync to **Loops** (when `LOOPS_API_KEY` is set) and optional
 }
 ```
 
-Requires `LOOPS_API_KEY` and list IDs in `.env` (see `.env.example`).
+Requires `LOOPS_API_KEY` and list IDs in `.env.local`.
 
 ---
 
