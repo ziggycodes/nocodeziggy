@@ -12,7 +12,7 @@ export type ProofMetric = {
 export const featuredTestimonial: Testimonial = {
   quote:
     "Isaac's lead gen system booked 284 meetings in our first month, and we didn't even add a single SDR.",
-  attribution: "BusyUp",
+  attribution: "Anna",
   role: "B2B SaaS Founder",
 };
 
