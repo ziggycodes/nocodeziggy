@@ -7,7 +7,6 @@ import { useEffect, useRef, useState } from "react";
 import { CtaButton } from "@/components/ui/CtaButton";
 import { EmailCapture } from "@/components/ui/EmailCapture";
 import { profile } from "@/content/profile";
-import { scrollToContact } from "@/lib/contact-link";
 
 const HeroLabScene = dynamic(
   () => import("@/components/three/HeroLabScene").then((m) => m.HeroLabScene),
@@ -81,7 +80,7 @@ export function Hero() {
           <div className="grid items-center gap-10 md:grid-cols-[1fr_auto] md:gap-14">
             <div>
               <CyclingHeadline lines={[...profile.hero.headlines]} />
-              <Subline text={profile.hero.sub} />
+              <Subline text={profile.audience} />
               <CtaRow />
             </div>
 
@@ -183,31 +182,25 @@ function GlitchWord({ text }: { text: string }) {
 
 function Subline({ text }: { text: string }) {
   return (
-  <>
     <motion.p
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: 0.85 }}
-      className="mb-4 max-w-[60ch] text-[16px] leading-relaxed text-[var(--color-mid)] md:text-[18px]"
+      className="mb-12 max-w-[60ch] text-[16px] font-medium leading-relaxed text-[var(--color-mid)] md:text-[18px]"
     >
       {text}
     </motion.p>
-    <motion.p
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay: 0.95 }}
-      className="mb-12 max-w-[60ch] text-[14px] leading-relaxed text-[var(--color-dim)] md:text-[15px]"
-    >
-      {profile.audience}
-    </motion.p>
-  </>
   );
 }
 
 function CtaRow() {
-  const onContact = (e: React.MouseEvent) => {
+  const onBuild = (e: React.MouseEvent) => {
     e.preventDefault();
-    scrollToContact();
+    const el = document.getElementById("build");
+    if (!el) return;
+    const lenis = (window as Window & { __lenis?: { scrollTo: (el: HTMLElement, opts: object) => void } }).__lenis;
+    if (lenis) lenis.scrollTo(el, { offset: -16, duration: 1.2 });
+    else el.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   const triggerDownload = () => {
@@ -241,10 +234,10 @@ function CtaRow() {
         <CtaButton
           variant="ghost"
           size="lg"
-          href="/#contact"
-          onClick={onContact as React.MouseEventHandler}
+          href={profile.hero.secondaryHref}
+          onClick={onBuild as React.MouseEventHandler}
         >
-          Tell me what you&apos;re building
+          {profile.hero.secondaryCta}
         </CtaButton>
       </motion.div>
 

@@ -22,15 +22,16 @@ export const profile = {
     description:
       "My exact inbound + outbound pipeline (JSON). Import into n8n and adapt.",
     filePath: "/downloads/n8n-lead-gen-template.json",
-    cta: "Want the workflow? Download the n8n lead gen template",
+    cta: "Get the exact n8n workflow that books 284 meetings/month",
   },
   hero: {
     headlines: [
       "I build AI systems that work while you sleep.",
-      "Automation Architect. No-Code Builder. AI Operator.",
+      "AI Systems Builder. Automation Operator.",
       "Workflows that run on autopilot.",
     ],
-    sub: "I design and deploy AI agents, n8n + Make automations, and Bubble SaaS systems for operators who want leverage.",
+    secondaryCta: "See how it works",
+    secondaryHref: "/#build",
   },
   bio: {
     short:

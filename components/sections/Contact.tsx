@@ -11,7 +11,7 @@ import { parseContactInterest } from "@/lib/contact-link";
 import { cn } from "@/lib/cn";
 
 const INTEREST_OPTIONS = [
-  { id: "", label: "What can I help with? (optional)" },
+  { id: "", label: "What are you looking to build?" },
   { id: "ai-agents", label: "AI Agents" },
   { id: "automation", label: "Workflow Automation" },
   { id: "saas", label: "Bubble SaaS Build" },
@@ -143,7 +143,7 @@ export function Contact() {
                         type="email"
                         value={email}
                         onChange={setEmail}
-                        placeholder="you@domain.com"
+                        placeholder="Enter your email"
                         required
                       />
                     </div>

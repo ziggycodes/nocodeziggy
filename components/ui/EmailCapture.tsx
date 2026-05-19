@@ -21,7 +21,7 @@ export function EmailCapture({
   mailingList,
   labInterest,
   submitLabel = "Subscribe",
-  placeholder = "you@domain.com",
+  placeholder = "Enter your email",
   compact = false,
   className,
   onSuccess,

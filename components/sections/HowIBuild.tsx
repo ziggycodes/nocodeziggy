@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { motion } from "motion/react";
 import { SectionHeader } from "@/components/ui/SectionHeader";
+import { contactHref, scrollToContact } from "@/lib/contact-link";
 
 type Station = {
   code: string;
@@ -136,6 +137,15 @@ export function HowIBuild() {
             {STATIONS.map((s, i) => (
               <StationCard key={s.code} station={s} index={i} pinned />
             ))}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.5, delay: 0.32 }}
+              className="relative flex w-[36vw] min-w-[280px] max-w-[420px] flex-shrink-0 items-center pl-4 md:pl-8"
+            >
+              <ProcessContactCta />
+            </motion.div>
           </div>
         </div>
 
@@ -145,8 +155,31 @@ export function HowIBuild() {
             <StationCard key={s.code} station={s} index={i} />
           ))}
         </div>
+
+        <div className="mt-10 border-t border-[var(--color-grid)] pt-8 lg:hidden">
+          <ProcessContactCta />
+        </div>
       </div>
     </section>
+  );
+}
+
+function ProcessContactCta() {
+  return (
+    <motion.a
+      href={contactHref()}
+      onClick={(e) => {
+        e.preventDefault();
+        scrollToContact();
+      }}
+      initial={{ opacity: 0, y: 12 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.5 }}
+      className="text-[13px] text-[var(--color-accent)] hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)] md:text-[14px]"
+    >
+      Seen enough? Let's map your system →
+    </motion.a>
   );
 }
 
