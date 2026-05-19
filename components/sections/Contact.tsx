@@ -7,6 +7,7 @@ import { HudPanel } from "@/components/ui/HudPanel";
 import { CtaButton } from "@/components/ui/CtaButton";
 import { Logo } from "@/components/chrome/Logo";
 import { profile } from "@/content/profile";
+import { parseContactInterest } from "@/lib/contact-link";
 import { cn } from "@/lib/cn";
 
 const INTEREST_OPTIONS = [
@@ -19,34 +20,45 @@ const INTEREST_OPTIONS = [
   { id: "other", label: "Something else" },
 ];
 
+const BUDGET_OPTIONS = [
+  { id: "", label: "Project budget (optional)" },
+  { id: "under-500", label: "Under $500" },
+  { id: "500-2k", label: "$500 – $2K" },
+  { id: "2k-plus", label: "$2K+" },
+  { id: "prefer-not", label: "Prefer not to say" },
+];
+
 type Phase = "idle" | "sending" | "sent" | "error";
 
 export function Contact() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [interest, setInterest] = useState("");
+  const [budget, setBudget] = useState("");
   const [message, setMessage] = useState("");
   const [phase, setPhase] = useState<Phase>("idle");
   const [errorText, setErrorText] = useState<string | null>(null);
 
-  // Pre-select interest from URL hash (legacy support: #contact?stack=stk-01 → ignored)
   useEffect(() => {
     if (typeof window === "undefined") return;
     const apply = () => {
-      const hash = window.location.hash;
-      const m = hash.match(/interest=([\w-]+)/);
-      if (m && INTEREST_OPTIONS.find((o) => o.id === m[1])) {
-        setInterest(m[1]);
+      const id = parseContactInterest();
+      if (id && INTEREST_OPTIONS.find((o) => o.id === id)) {
+        setInterest(id);
       }
     };
     apply();
     window.addEventListener("hashchange", apply);
-    return () => window.removeEventListener("hashchange", apply);
+    window.addEventListener("popstate", apply);
+    return () => {
+      window.removeEventListener("hashchange", apply);
+      window.removeEventListener("popstate", apply);
+    };
   }, []);
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name.trim() || !message.trim() || phase !== "idle") return;
+    if (!name.trim() || !email.trim() || !message.trim() || phase !== "idle") return;
     setErrorText(null);
     setPhase("sending");
 
@@ -58,6 +70,7 @@ export function Contact() {
           name: name.trim(),
           handle: email.trim() || null,
           stack: interest || null,
+          budget: budget || null,
           message: message.trim(),
         }),
       });
@@ -76,6 +89,7 @@ export function Contact() {
     setName("");
     setEmail("");
     setInterest("");
+    setBudget("");
     setMessage("");
     setPhase("idle");
     setErrorText(null);
@@ -130,6 +144,7 @@ export function Contact() {
                         value={email}
                         onChange={setEmail}
                         placeholder="you@domain.com"
+                        required
                       />
                     </div>
 
@@ -160,7 +175,12 @@ export function Contact() {
                       </p>
                       <CtaButton
                         type="submit"
-                        disabled={!name.trim() || !message.trim() || phase === "sending"}
+                        disabled={
+                          !name.trim() ||
+                          !email.trim() ||
+                          !message.trim() ||
+                          phase === "sending"
+                        }
                         className="disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         {phase === "sending" ? "Sending…" : "Send message"}
@@ -174,6 +194,23 @@ export function Contact() {
 
           {/* Sidebar */}
           <aside className="lg:col-span-4 flex flex-col gap-4">
+            <HudPanel bodyClassName="flex flex-col gap-4 p-1">
+              <div className="text-[12px] tracking-[0.04em] text-[var(--color-mid)]">
+                Prefer to pick a time?
+              </div>
+              <p className="text-[14px] leading-relaxed text-[var(--color-hi)]">
+                {profile.booking.label}
+              </p>
+              <CtaButton
+                href={profile.booking.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full justify-center"
+              >
+                Schedule on Calendly
+              </CtaButton>
+            </HudPanel>
+
             <HudPanel
               bodyClassName="flex flex-col gap-2"
             >
@@ -367,6 +404,14 @@ function SentScreen({ onReset }: { onReset: () => void }) {
           or watch a build log.
         </p>
       </div>
+      <CtaButton
+        href={profile.booking.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        variant="ghost"
+      >
+        Or book a call now
+      </CtaButton>
       <button
         type="button"
         onClick={onReset}

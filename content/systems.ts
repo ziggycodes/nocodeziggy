@@ -19,6 +19,14 @@ export type SystemMetric = {
   value: string;
 };
 
+export type ContactInterestId =
+  | "ai-agents"
+  | "automation"
+  | "saas"
+  | "lead-gen"
+  | "voice"
+  | "other";
+
 export type System = {
   id: string;
   code: string;
@@ -32,6 +40,12 @@ export type System = {
   edges: SystemEdge[];
   buildLog: { stamp: string; entry: string }[];
   outcomes: string[];
+  /** Maps to contact form interest dropdown + deep links. */
+  contactInterest: ContactInterestId;
+  /** Optional media.ts id for "See how I built this" CTA. */
+  relatedVideoId?: string;
+  /** When true, show downloadable n8n template CTA. */
+  leadMagnet?: boolean;
   /** When true, the Mission Detail opens with the AgentMesh 3D R3F scene. */
   hasMesh?: boolean;
 };
@@ -81,6 +95,8 @@ export const systems: System[] = [
       "End-to-end resolve time down from 14 min → 1.8 s",
       "Operator dashboard reveals every agent's reasoning trace",
     ],
+    contactInterest: "ai-agents",
+    relatedVideoId: "ai-mesh-build",
     hasMesh: true,
   },
   {
@@ -122,6 +138,8 @@ export const systems: System[] = [
       "Cold pipeline scaled 5x without adding headcount",
       "First-response < 90 seconds on every qualified lead",
     ],
+    contactInterest: "lead-gen",
+    leadMagnet: true,
   },
   {
     id: "content-os",
@@ -161,6 +179,7 @@ export const systems: System[] = [
       "Content velocity 8x without sacrificing editorial voice",
       "Channel-aware rewrites tuned to each platform's hook style",
     ],
+    contactInterest: "automation",
   },
   {
     id: "voice-recept",
@@ -200,6 +219,7 @@ export const systems: System[] = [
       "Captures the 64% of calls that came in after hours",
       "Owners get a clean transcript + outcome in Slack within 30s",
     ],
+    contactInterest: "voice",
   },
   {
     id: "saas-bubble",
@@ -239,6 +259,8 @@ export const systems: System[] = [
       "Founders shipping live SaaS in under a month",
       "Bubble + AI = real product, not a prototype",
     ],
+    contactInterest: "saas",
+    relatedVideoId: "bubble-stripe",
   },
   {
     id: "crm-orch",
@@ -281,6 +303,7 @@ export const systems: System[] = [
       "Every team sees the same customer record, always",
       "Eliminated $14K/yr of duplicate-data engineering",
     ],
+    contactInterest: "automation",
   },
   {
     id: "meal-plan",
@@ -321,6 +344,7 @@ export const systems: System[] = [
       "Real subscriber growth, not vanity sign-ups",
       "Plans adapt to allergies, taste, budget, schedule",
     ],
+    contactInterest: "saas",
   },
   {
     id: "ai-market",
@@ -360,5 +384,7 @@ export const systems: System[] = [
       "Fraud caught before payout in under a second",
       "Search feels like 'it gets me' — embeddings, not strings",
     ],
+    contactInterest: "other",
   },
 ];
+

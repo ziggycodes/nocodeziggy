@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { experiments, type Experiment } from "@/content/experiments";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { HudPanel } from "@/components/ui/HudPanel";
+import { EmailCapture } from "@/components/ui/EmailCapture";
 
 const STATUS_LABEL: Record<Experiment["status"], string> = {
   PROTOTYPING: "Prototyping",
@@ -104,6 +105,19 @@ function ExperimentCard({ exp, index }: { exp: Experiment; index: number }) {
             <div className="mt-2 text-[11px] text-[var(--color-dim)]">
               Last updated {exp.lastUpdate}
             </div>
+          </div>
+
+          <div className="border-t border-[var(--color-grid)] pt-4">
+            <p className="mb-2 text-[12px] text-[var(--color-mid)]">
+              Get notified when this ships
+            </p>
+            <EmailCapture
+              source={`lab-${exp.id}`}
+              mailingList="lab"
+              labInterest={exp.title}
+              submitLabel="Notify me"
+              compact
+            />
           </div>
         </div>
       </HudPanel>

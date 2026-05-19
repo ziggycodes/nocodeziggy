@@ -1,0 +1,63 @@
+{
+  "name": "Lead Gen Engine (Starter)",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "trigger-webhook",
+      "name": "Inbound Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {},
+      "id": "enrich-lead",
+      "name": "Enrich Lead",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [480, 220]
+    },
+    {
+      "parameters": {},
+      "id": "score-lead",
+      "name": "AI Score",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1,
+      "position": [480, 380]
+    },
+    {
+      "parameters": {},
+      "id": "route-crm",
+      "name": "Route to CRM",
+      "type": "n8n-nodes-base.hubspot",
+      "typeVersion": 2,
+      "position": [720, 300]
+    },
+    {
+      "parameters": {},
+      "id": "notify-slack",
+      "name": "Notify Slack",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2,
+      "position": [960, 300]
+    }
+  ],
+  "connections": {
+    "Inbound Webhook": {
+      "main": [[{ "node": "Enrich Lead", "type": "main", "index": 0 }, { "node": "AI Score", "type": "main", "index": 0 }]]
+    },
+    "Enrich Lead": {
+      "main": [[{ "node": "Route to CRM", "type": "main", "index": 0 }]]
+    },
+    "AI Score": {
+      "main": [[{ "node": "Route to CRM", "type": "main", "index": 0 }]]
+    },
+    "Route to CRM": {
+      "main": [[{ "node": "Notify Slack", "type": "main", "index": 0 }]]
+    }
+  },
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "description": "Starter n8n workflow: webhook → enrich + score → CRM + Slack. Replace nodes with your stack (Apollo, HubSpot, OpenAI). Export from NoCodeZiggy — swap with your production JSON anytime."
+  }
+}

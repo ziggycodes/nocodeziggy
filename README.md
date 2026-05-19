@@ -171,7 +171,22 @@ Everything else is black, white, or grey. Cyan is rare — when you see it, some
 }
 ```
 
-Currently the handler logs to stdout. To wire real delivery, replace the `console.log` in `app/api/contact/route.ts` with an email send (Resend, Postmark) or a Slack webhook POST.
+Contact submissions sync to **Loops** (when `LOOPS_API_KEY` is set) and optionally forward via `CONTACT_WEBHOOK_URL` (Slack, etc.).
+
+## API: `POST /api/subscribe`
+
+```jsonc
+// Request
+{
+  "email": "string",           // required
+  "source": "string",          // required — e.g. hero-lead-magnet, footer-newsletter
+  "mailingList": "lead-magnet" | "newsletter" | "lab",
+  "labInterest": "string",     // optional — for lab waitlist
+  "website": ""                // honeypot — must be empty
+}
+```
+
+Requires `LOOPS_API_KEY` and list IDs in `.env` (see `.env.example`).
 
 ---
 

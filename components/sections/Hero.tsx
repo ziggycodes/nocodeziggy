@@ -5,7 +5,9 @@ import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { CtaButton } from "@/components/ui/CtaButton";
+import { EmailCapture } from "@/components/ui/EmailCapture";
 import { profile } from "@/content/profile";
+import { scrollToContact } from "@/lib/contact-link";
 
 const HeroLabScene = dynamic(
   () => import("@/components/three/HeroLabScene").then((m) => m.HeroLabScene),
@@ -181,25 +183,41 @@ function GlitchWord({ text }: { text: string }) {
 
 function Subline({ text }: { text: string }) {
   return (
+  <>
     <motion.p
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: 0.85 }}
-      className="mb-12 max-w-[60ch] text-[16px] leading-relaxed text-[var(--color-mid)] md:text-[18px]"
+      className="mb-4 max-w-[60ch] text-[16px] leading-relaxed text-[var(--color-mid)] md:text-[18px]"
     >
       {text}
     </motion.p>
+    <motion.p
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, delay: 0.95 }}
+      className="mb-12 max-w-[60ch] text-[14px] leading-relaxed text-[var(--color-dim)] md:text-[15px]"
+    >
+      {profile.audience}
+    </motion.p>
+  </>
   );
 }
 
 function CtaRow() {
-  const onJump = (id: string) => (e: React.MouseEvent) => {
+  const onContact = (e: React.MouseEvent) => {
     e.preventDefault();
-    const el = document.getElementById(id);
-    if (!el) return;
-    const lenis = (window as any).__lenis;
-    if (lenis) lenis.scrollTo(el, { offset: -16, duration: 1.2 });
-    else el.scrollIntoView({ behavior: "smooth", block: "start" });
+    scrollToContact();
+  };
+
+  const triggerDownload = () => {
+    const a = document.createElement("a");
+    a.href = profile.leadMagnet.filePath;
+    a.download = "n8n-lead-gen-template.json";
+    a.rel = "noopener";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
   };
 
   return (
@@ -207,14 +225,46 @@ function CtaRow() {
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: 1.05 }}
-      className="flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:gap-4"
+      className="flex max-w-[640px] flex-col items-start gap-6"
     >
-      <CtaButton size="lg" href="#lab" onClick={onJump("lab") as any}>
-        See the Work
-      </CtaButton>
-      <CtaButton variant="ghost" size="lg" href="#media" onClick={onJump("media") as any}>
-        Watch
-      </CtaButton>
+      <motion.div
+        className="flex flex-col items-start gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3"
+      >
+        <CtaButton
+          size="lg"
+          href={profile.booking.url}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {profile.booking.shortLabel}
+        </CtaButton>
+        <CtaButton
+          variant="ghost"
+          size="lg"
+          href="/#contact"
+          onClick={onContact as React.MouseEventHandler}
+        >
+          Tell me what you&apos;re building
+        </CtaButton>
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5, delay: 1.2 }}
+        className="w-full border border-[var(--color-grid)] bg-[color:rgb(0_0_0/0.35)] p-4 backdrop-blur-sm"
+      >
+        <p className="mb-3 text-[13px] text-[var(--color-mid)]">
+          {profile.leadMagnet.cta}
+        </p>
+        <EmailCapture
+          source="hero-lead-magnet"
+          mailingList="lead-magnet"
+          submitLabel="Get template"
+          compact
+          onSuccess={triggerDownload}
+        />
+      </motion.div>
     </motion.div>
   );
 }

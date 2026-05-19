@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import { Logo } from "./Logo";
+import { profile } from "@/content/profile";
 import { cn } from "@/lib/cn";
 
 const NAV_ITEMS = [
@@ -116,6 +117,15 @@ export function Nav() {
         </ul>
 
         <span aria-hidden className="hidden md:block h-5 w-px bg-[var(--color-grid)] ml-1" />
+
+        <a
+          href={profile.booking.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hidden md:inline-flex items-center rounded-full px-3 py-1.5 text-[12px] tracking-wide text-[var(--color-mid)] transition-colors hover:text-[var(--color-hi)]"
+        >
+          Book call
+        </a>
 
         <a
           href="#contact"

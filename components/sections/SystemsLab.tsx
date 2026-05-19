@@ -8,7 +8,11 @@ import { HudPanel } from "@/components/ui/HudPanel";
 import { NodeFlowSVG } from "@/components/ui/NodeFlowSVG";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { CtaButton } from "@/components/ui/CtaButton";
+import { EmailCapture } from "@/components/ui/EmailCapture";
 import { MetricCounter } from "@/components/ui/MetricCounter";
+import { profile } from "@/content/profile";
+import { contactHref, scrollToContact } from "@/lib/contact-link";
+import { getRelatedVideoUrl } from "@/lib/media-link";
 
 const AgentMeshScene = dynamic(
   () =>
@@ -144,6 +148,18 @@ function SystemCard({
             <MetricCounter key={m.label} value={m.value} label={m.label} />
           ))}
         </div>
+
+        <a
+          href={contactHref(system.contactInterest)}
+          onClick={(e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            scrollToContact(system.contactInterest);
+          }}
+          className="mt-1 text-[13px] text-[var(--color-accent)] hover:underline"
+        >
+          Want this built for your business? →
+        </a>
       </HudPanel>
     </motion.button>
   );
@@ -159,14 +175,22 @@ function MissionDetail({
   system: System;
   onClose: () => void;
 }) {
+  const videoUrl = getRelatedVideoUrl(system);
+
   const onJumpContact = (e: React.MouseEvent) => {
     e.preventDefault();
     onClose();
-    setTimeout(() => {
-      const el = document.getElementById("contact");
-      if (!el) return;
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 250);
+    setTimeout(() => scrollToContact(system.contactInterest), 250);
+  };
+
+  const triggerDownload = () => {
+    const a = document.createElement("a");
+    a.href = profile.leadMagnet.filePath;
+    a.download = "n8n-lead-gen-template.json";
+    a.rel = "noopener";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
   };
 
   return (
@@ -290,10 +314,39 @@ function MissionDetail({
               </ul>
             </div>
 
-            <div className="mt-2">
-              <CtaButton href="#contact" onClick={onJumpContact as any}>
-                Get in touch
+            <div className="mt-2 flex flex-col gap-4 border-t border-[var(--color-grid)] pt-4">
+              <CtaButton
+                href={contactHref(system.contactInterest)}
+                onClick={onJumpContact as React.MouseEventHandler}
+              >
+                Want this built for your business?
               </CtaButton>
+
+              {system.leadMagnet && (
+                <div>
+                  <p className="mb-2 text-[12px] text-[var(--color-mid)]">
+                    Download the workflow template
+                  </p>
+                  <EmailCapture
+                    source={`case-study-${system.id}`}
+                    mailingList="lead-magnet"
+                    submitLabel="Get template"
+                    compact
+                    onSuccess={triggerDownload}
+                  />
+                </div>
+              )}
+
+              {videoUrl && (
+                <a
+                  href={videoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[13px] text-[var(--color-mid)] hover:text-[var(--color-accent)] transition-colors"
+                >
+                  See how I built this →
+                </a>
+              )}
             </div>
           </div>
         </HudPanel>

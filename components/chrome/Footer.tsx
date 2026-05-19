@@ -1,6 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import { Logo } from "./Logo";
+import { EmailCapture } from "@/components/ui/EmailCapture";
 import { profile } from "@/content/profile";
 
 export function Footer() {
@@ -49,6 +51,14 @@ export function Footer() {
                 Email
               </a>
             </li>
+            <li>
+              <Link
+                href="/blog"
+                className="text-[var(--color-mid)] hover:text-[var(--color-hi)] transition-colors"
+              >
+                Blog
+              </Link>
+            </li>
           </ul>
         </div>
 
@@ -63,6 +73,20 @@ export function Footer() {
           <div className="mt-1 text-[12px] text-[var(--color-mid)]">
             {profile.location} · {profile.utc}
           </div>
+        </div>
+      </div>
+
+      <div className="border-t border-[var(--color-grid)]">
+        <div className="mx-auto w-full max-w-[1400px] px-6 py-8 md:px-10">
+          <p className="mb-3 text-[14px] text-[var(--color-hi)]">
+            Get new builds + templates in your inbox
+          </p>
+          <EmailCapture
+            source="footer-newsletter"
+            mailingList="newsletter"
+            submitLabel="Subscribe"
+            className="max-w-md"
+          />
         </div>
       </div>
 

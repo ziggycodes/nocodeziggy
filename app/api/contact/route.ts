@@ -1,13 +1,23 @@
 import { NextResponse } from "next/server";
+import { notifyContactLead } from "@/lib/loops";
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { name, handle, stack, message } = body ?? {};
+    const { name, handle, stack, budget, message } = body ?? {};
 
     if (!name || typeof name !== "string" || !message || typeof message !== "string") {
       return NextResponse.json(
         { ok: false, error: "Missing required fields: name, message." },
+        { status: 400 }
+      );
+    }
+
+    if (!handle || typeof handle !== "string" || !EMAIL_RE.test(handle.trim())) {
+      return NextResponse.json(
+        { ok: false, error: "Valid email required." },
         { status: 400 }
       );
     }
@@ -19,14 +29,21 @@ export async function POST(req: Request) {
       );
     }
 
-    // For now we just log. Plug an email/Slack service in here.
+    const payload = {
+      name: name.trim(),
+      email: handle.trim(),
+      interest: typeof stack === "string" ? stack : null,
+      budget: typeof budget === "string" ? budget : null,
+      message: message.trim(),
+    };
+
     console.log("[contact] message received", {
       at: new Date().toISOString(),
-      name,
-      handle,
-      stack,
+      ...payload,
       length: message.length,
     });
+
+    await notifyContactLead(payload);
 
     await new Promise((r) => setTimeout(r, 220));
 
