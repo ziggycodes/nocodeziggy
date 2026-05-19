@@ -11,9 +11,9 @@ export type ProofMetric = {
 
 export const featuredTestimonial: Testimonial = {
   quote:
-    "Ziggy's lead gen system booked 284 meetings in our first month — we didn't add a single SDR.",
-  attribution: "Growth lead",
-  role: "B2B SaaS operator",
+    "Isaac's lead gen system booked 284 meetings in our first month, and we didn't even add a single SDR.",
+  attribution: "BusyUp",
+  role: "B2B SaaS Founder",
 };
 
 export const proofMetrics: ProofMetric[] = [
